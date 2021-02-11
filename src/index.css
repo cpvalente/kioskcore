@@ -69,10 +69,41 @@ code {
 }
 
 .card {
+  border: black 1px solid;
   border-radius: 0.5em;
 }
 
+/* .card > * {
+  padding: 0.5em;
+} */
+
 .cardTitle {
-  font-size: 2em;
-  padding-left: 0.5em;
+  font-size: 1.5em;
+}
+
+.indicatorlist {
+  display: inline-grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 3px;
+}
+
+.indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border: black 1px solid;
+}
+
+ul {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+li:nth-child(odd) {
+  background: #fafafa;
+}
+li:nth-child(even) {
+  background: #fcfcfc;
 }

@@ -6,9 +6,7 @@ function App() {
   return (
     <div className="App darkGradient">
       <Navbar />
-      <div className='main'>
-        <Dashboard />
-      </div>
+      <Dashboard />
     </div>
   );
 }

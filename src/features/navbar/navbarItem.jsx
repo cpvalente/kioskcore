@@ -1,8 +1,7 @@
-export default function NavbarItem() {
-
+export default function NavbarItem({ selected }) {
   return (
-    <div className='navItem'>
-      <h3>Item n</h3>
+    <div className='navItemWrapper'>
+      <div className='navItem'></div>
     </div>
-  )
+  );
 }

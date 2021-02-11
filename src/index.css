@@ -1,13 +1,78 @@
 body {
+  width: 100%;
+  height: 100%;
   margin: 0;
+
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.App {
+  display: grid;
+  grid-template-columns: 8em 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 0px;
+  grid-template-areas: 'navbar main';
+}
+
+.darkGradient {
+}
+
+.navbar {
+  grid-area: navbar;
+  height: 100vh;
+  padding-top: 1em;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f1f1f1;
+}
+
+.navitem {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.navitem-selected {
+  color: #fffffa;
+  background-color: #222;
+}
+
+.main {
+  grid-area: main;
+  padding-right: 1em;
+  padding-top: 1em;
+  height: 100vh;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 1em;
+  grid-row-gap: 1em;
+  grid-template-areas:
+    'general network'
+    'inputs playback'
+    'messages heatmap';
+}
+
+.card {
+  border-radius: 0.5em;
+}
+
+.cardTitle {
+  font-size: 2em;
+  padding-left: 0.5em;
 }

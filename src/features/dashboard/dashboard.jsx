@@ -1,69 +1,148 @@
+import { useEffect, useState } from 'react';
+import { getData, getDummyData } from '../../data/dummyData';
+
 export default function Dashboard() {
   const lastSeen = '11.02.2021 19:59:23';
+  const [data, setData] = useState(getDummyData);
+  const [loading, setLoading] = useState(false);
+
+  async function getData() {
+    Promise.all([
+      fetch(
+        'http://haarlem.visualproductions.nl:84/ajax/get/index/status'
+      ).then((response) => response.json()),
+
+      fetch(
+        'http://haarlem.visualproductions.nl:84/ajax/get/playback/playback'
+      ).then((response) => response.json()),
+
+      fetch(
+        'http://haarlem.visualproductions.nl:84/ajax/get/monitor/tcp/in'
+      ).then((response) => response.json()),
+
+    ]).then((data) => {
+      console.log(data);
+      setData(data);
+    });
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className='dashboard'>
       <div className='card card-general'>
-        <h3 className='cardTitle'>{data.general.label}</h3>
+        <h3 className='cardTitle'>{data[0].gen.lbl}</h3>
         <table>
           <tbody>
-          <tr>
-            <td className='field'>Last seen:</td>
-            <td>{lastSeen}</td>
-          </tr>
-          <tr>
-            <td className='field'>Uptime:</td>
-            <td>{data.general.uptime}</td>
-          </tr>
+            <tr>
+              <td className='field'>Last seen:</td>
+              <td>{lastSeen}</td>
+            </tr>
+            <tr>
+              <td className='field'>Uptime:</td>
+              <td>{data[0].gen.upt}</td>
+            </tr>
           </tbody>
         </table>
       </div>
-      <div className ='card card-network'>
+      <div className='card card-network'>
         <h3 className='cardTitle'>Network</h3>
         <table>
           <tbody>
-          <tr>
-            <td className='field'>Date:</td>
-            <td>{data.time.date}</td>
-          </tr>
-          <tr>
-            <td className='field'>Time:</td>
-            <td>{data.time.time}</td>
-          </tr>
-          <tr>
-            <td className='field'>Firmware:</td>
-            <td>{data.general.firmwareversion}</td>
-          </tr>
-          <tr>
-            <td className='field'>IP Address:</td>
-            <td>{data.network.ipaddress}</td>
-          </tr>
-          <tr>
-            <td className='field'>Subnet:</td>
-            <td>{data.network.subnetmask}</td>
-          </tr>
+            <tr>
+              <td className='field'>Date:</td>
+              <td>{data[0].time.d}</td>
+            </tr>
+            <tr>
+              <td className='field'>Time:</td>
+              <td>{data[0].time.t}</td>
+            </tr>
+            <tr>
+              <td className='field'>Firmware:</td>
+              <td>{data[0].gen.fw}</td>
+            </tr>
+            <tr>
+              <td className='field'>IP Address:</td>
+              <td>{data[0].ip.ip}</td>
+            </tr>
+            <tr>
+              <td className='field'>Subnet:</td>
+              <td>{data[0].ip.sn}</td>
+            </tr>
           </tbody>
         </table>
       </div>
       <div className='card card-inputs indicatorlist'>
         <h3 className='cardTitle'>Inputs</h3>
-        <div className='indicator'>DMX A</div>
-        <div className='indicator'>DMX B</div>
-        <div className='indicator'>MIDI</div>
-        <div className='indicator'>Art-Net</div>
-        <div className='indicator active'>sACN</div>
-        <div className='indicator'>TCP</div>
-        <div className='indicator'>UDP</div>
-        <div className='indicator'>OSC</div>
+        <div
+          className={
+            data[0].receiving.d1 === 'yes' ? 'indicator active' : 'indicator'
+          }
+        >
+          DMX A
+        </div>
+        <div
+          className={
+            data[0].receiving.d2 === 'yes' ? 'indicator active' : 'indicator'
+          }
+        >
+          DMX B
+        </div>
+        <div
+          className={
+            data[0].receiving.midi === 'yes' ? 'indicator active' : 'indicator'
+          }
+        >
+          MIDI
+        </div>
+        <div
+          className={
+            data[0].receiving.a === 'yes' ? 'indicator active' : 'indicator'
+          }
+        >
+          Art-Net
+        </div>
+        <div
+          className={
+            data[0].receiving.s === 'yes' ? 'indicator active' : 'indicator'
+          }
+        >
+          sACN
+        </div>
+        <div
+          className={
+            data[0].receiving.t === 'yes' ? 'indicator active' : 'indicator'
+          }
+        >
+          TCP
+        </div>
+        <div
+          className={
+            data[0].receiving.u === 'yes' ? 'indicator active' : 'indicator'
+          }
+        >
+          UDP
+        </div>
+        <div
+          className={
+            data[0].receiving.o === 'yes' ? 'indicator active' : 'indicator'
+          }
+        >
+          OSC
+        </div>
       </div>
       <div className='card card-playback indicatorlist'>
         <h3 className='cardTitle'>Playback Status</h3>
-        <div className='indicator active'>{data.playbacks.playback1.name}</div>
-        <div className='indicator'>{data.playbacks.playback2.name}</div>
-        <div className='indicator'>{data.playbacks.playback3.name}</div>
-        <div className='indicator'>{data.playbacks.playback4.name}</div>
-        <div className='indicator'>{data.playbacks.playback5.name}</div>
-        <div className='indicator'>{data.playbacks.playback6.name}</div>
+        {data[1].playbacks.map((pb) => (
+          <div className={pb.state === 1 ? 'indicator active' : 'indicator'}>
+            <span>{pb.label}</span>
+            <span>
+              {pb.cue}/{pb.list}
+            </span>
+          </div>
+        ))}
       </div>
       <div className='card card-messages'>
         <h3 className='cardTitle'>Messages</h3>
@@ -77,24 +156,14 @@ export default function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>15:04:10</td>
-              <td>127.0.0.1</td>
-              <td>UDP</td>
-              <td>'UDP testing'</td>
-            </tr>
-            <tr>
-              <td>15:04:00</td>
-              <td>127.0.0.1</td>
-              <td>TCP</td>
-              <td>'TCP testing'</td>
-            </tr>
-            <tr>
-              <td>15:03:10</td>
-              <td>127.0.0.1</td>
-              <td>OSC</td>
-              <td>'OSC testing'</td>
-            </tr>
+            {data[2].tcpIn.map((tcp) => (
+              <tr>
+                <td>15:04:10</td>
+                <td>{tcp.ip}</td>
+                <td>TCP</td>
+                <td>{tcp.arg}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

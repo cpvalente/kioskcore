@@ -132,9 +132,11 @@ li, p {
 .indicator {
   flex-grow: 1;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding:5px;
+  height:4em;
   background-color: #3d424944;
   border-radius: 0.2em;
   color: #53a6fa88;

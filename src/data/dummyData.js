@@ -25,6 +25,7 @@ export function getDummyData() {
         OSC: 'no',
       },
     },
+
     {
       playbacks: [
         {
@@ -65,13 +66,23 @@ export function getDummyData() {
         },
       ],
     },
+
     {
       inCount: 162,
       tcpIn: [],
     },
+
     {
-      outCount: 0,
-      tcpOut: [],
+      channels: {
+        data: [0]
+      }
     },
+
+    {
+      channels: {
+        data: [0]
+      }
+    },
+
   ];
 }

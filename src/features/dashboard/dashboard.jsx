@@ -7,6 +7,8 @@ export default function Dashboard() {
   const [data, setData] = useState(getDummyData);
   const [loading, setLoading] = useState(false);
 
+  console.log(data)
+
   async function getData() {
     Promise.all([
       fetch(
@@ -20,6 +22,15 @@ export default function Dashboard() {
       fetch(
         'http://haarlem.visualproductions.nl:84/ajax/get/monitor/tcp/in'
       ).then((response) => response.json()),
+
+      fetch(
+        'http://haarlem.visualproductions.nl:84/ajax/get/monitor/channels/0'
+      ).then((response) => response.json()),
+
+      fetch(
+        'http://haarlem.visualproductions.nl:84/ajax/get/monitor/channels/256'
+      ).then((response) => response.json()),
+
 
     ]).then((data) => {
       console.log(data);
@@ -170,7 +181,9 @@ export default function Dashboard() {
       </div>
       <div className='card card-heatmap'>
         <h3 className='cardTitle'>Heatmap</h3>
-            <Heatmap />
+            <Heatmap heatmapData={
+              [...data[3].channels.data, ...data[4].channels.data]
+            }/>
       </div>
     </div>
   );

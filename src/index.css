@@ -174,3 +174,15 @@ tr:nth-child(odd) {
 tr:nth-child(even) {
   background: #32384044;
 }
+.heatmapgrid {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+  padding: 10px;
+}
+
+.node {
+  width: 15px;
+  height: 15px;
+}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getData, getDummyData } from '../../data/dummyData';
+import Heatmap from './heatmap';
 
 export default function Dashboard() {
   const lastSeen = '11.02.2021 19:59:23';
@@ -169,6 +170,7 @@ export default function Dashboard() {
       </div>
       <div className='card card-heatmap'>
         <h3 className='cardTitle'>Heatmap</h3>
+            <Heatmap />
       </div>
     </div>
   );

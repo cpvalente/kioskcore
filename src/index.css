@@ -61,10 +61,6 @@ p {
   box-shadow: 0 0 10px 0px #26daad66;
 }
 
-.navItemWrapper.selected > .navItem-settings {
-  background-color: #007ae1;
-  box-shadow: 0 0 10px 0px #007ae1;
-}
 
 .navItem,
 .navItem-settings {
@@ -77,8 +73,9 @@ p {
 .navItemWrapper > .navItem {
   background-color: #26daadaa;
 }
+
 .navItemWrapper > .navItem-settings {
-  background-color: #007ae1aa;
+  background: url(./assets/images/settings.svg);
 }
 
 .main {
@@ -86,7 +83,8 @@ p {
   height: 100vh;
 }
 
-.dashboard {
+.settings, .dashboard {
+  background-color: #30323a;
   box-sizing: border-box;
   margin: 8px 8px 8px 0;
   padding: 4px;
@@ -98,8 +96,6 @@ p {
   grid-template-rows: repeat(9, 1fr);
   grid-column-gap: 4px;
   grid-row-gap: 4px;
-
-  background-color: #30323a;
 }
 
 .card {
@@ -228,4 +224,39 @@ tr:nth-child(even) {
 .card-heatmap {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 6 / 1 / 10 / 9;
+}
+
+.card-settings-title {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 2 / 2 / 4 / 9;
+}
+
+.card-settings-devices {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 4 / 2 / 7 / 14;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.card-settings-notes {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 7 / 2 / 9 / 14;
+}
+
+.card-settings-contacts {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 2 / 9 / 4 / 14;
+}
+
+.card-settings-title > .cardTitle {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.card-settings-title > .cardSub {
+  font-size: 14px;
+  line-height: 22px;
+  padding-left: 8px;
+  margin: 0;
 }

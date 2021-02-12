@@ -70,9 +70,10 @@ export default function Dashboard() {
 
   return (
     <div className='dashboard'>
-      <div class='card card-general'>
+      <div className='card card-general'>
         <h3 className='cardTitle'>{data.general.label}</h3>
         <table>
+          <tbody>
           <tr>
             <td className='field'>Last seen:</td>
             <td>{lastSeen}</td>
@@ -81,11 +82,13 @@ export default function Dashboard() {
             <td className='field'>Uptime:</td>
             <td>{data.general.uptime}</td>
           </tr>
+          </tbody>
         </table>
       </div>
-      <div class='card card-network'>
+      <div className ='card card-network'>
         <h3 className='cardTitle'>Network</h3>
         <table>
+          <tbody>
           <tr>
             <td className='field'>Date:</td>
             <td>{data.time.date}</td>
@@ -106,9 +109,10 @@ export default function Dashboard() {
             <td className='field'>Subnet:</td>
             <td>{data.network.subnetmask}</td>
           </tr>
+          </tbody>
         </table>
       </div>
-      <div class='card card-inputs indicatorlist'>
+      <div className='card card-inputs indicatorlist'>
         <h3 className='cardTitle'>Inputs</h3>
         <div className='indicator'>DMX A</div>
         <div className='indicator'>DMX B</div>
@@ -119,8 +123,8 @@ export default function Dashboard() {
         <div className='indicator'>UDP</div>
         <div className='indicator'>OSC</div>
       </div>
-      <div class='card card-playback indicatorlist'>
-      <h3 className='cardTitle'>Playback Status</h3>
+      <div className='card card-playback indicatorlist'>
+        <h3 className='cardTitle'>Playback Status</h3>
         <div className='indicator active'>{data.playbacks.playback1.name}</div>
         <div className='indicator'>{data.playbacks.playback2.name}</div>
         <div className='indicator'>{data.playbacks.playback3.name}</div>
@@ -128,36 +132,40 @@ export default function Dashboard() {
         <div className='indicator'>{data.playbacks.playback5.name}</div>
         <div className='indicator'>{data.playbacks.playback6.name}</div>
       </div>
-      <div class='card card-messages'>
+      <div className='card card-messages'>
         <h3 className='cardTitle'>Messages</h3>
         <table>
-          <tr>
-            <th>Timestamp</th>
-            <th>From</th>
-            <th>Protocol</th>
-            <th>Message</th>
-          </tr>
-          <tr>
-            <td>15:04:10</td>
-            <td>127.0.0.1</td>
-            <td>UDP</td>
-            <td>'UDP testing'</td>
-          </tr>
-          <tr>
-            <td>15:04:00</td>
-            <td>127.0.0.1</td>
-            <td>TCP</td>
-            <td>'TCP testing'</td>
-          </tr>
-          <tr>
-            <td>15:03:10</td>
-            <td>127.0.0.1</td>
-            <td>OSC</td>
-            <td>'OSC testing'</td>
-          </tr>
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>From</th>
+              <th>Protocol</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>15:04:10</td>
+              <td>127.0.0.1</td>
+              <td>UDP</td>
+              <td>'UDP testing'</td>
+            </tr>
+            <tr>
+              <td>15:04:00</td>
+              <td>127.0.0.1</td>
+              <td>TCP</td>
+              <td>'TCP testing'</td>
+            </tr>
+            <tr>
+              <td>15:03:10</td>
+              <td>127.0.0.1</td>
+              <td>OSC</td>
+              <td>'OSC testing'</td>
+            </tr>
+          </tbody>
         </table>
       </div>
-      <div class='card card-heatmap'>
+      <div className='card card-heatmap'>
         <h3 className='cardTitle'>Heatmap</h3>
       </div>
     </div>

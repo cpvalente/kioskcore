@@ -53,12 +53,18 @@ li, p {
 .navItemWrapper.selected {
   background-color: #202a38;
 }
-.navItemWrapper.selected > .navItem{
+
+.navItemWrapper.selected > .navItem {
   background-color: #26daad;
   box-shadow: 0 0 10px 0px #26daad66;
 }
 
-.navItem {
+.navItemWrapper.selected > .navItem-settings {
+  background-color: #266bda;
+  box-shadow: 0 0 10px 0px #266bda;
+}
+
+.navItem, .navItem-settings {
   height: 3em;
   width: 3em;
   margin:auto;
@@ -69,7 +75,7 @@ li, p {
 .navItemWrapper > .navItem {
   background-color: #26daadaa;
 }
-.navItemWrapper > .settings {
+.navItemWrapper > .navItem-settings {
   background-color: #266bdaaa;
 }
 

@@ -1,19 +1,34 @@
-import NavbarItem from "./navbarItem";
-import NavbarSettings from "./navbarSettings";
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import NavbarSettings from './navbarSettings';
 
-export default function Navbar() {
+export default function Navbar({ devices }) {
 
 
   return (
     <div className='navbar'>
-      <NavbarItem selected={false} />
-      <NavbarItem selected={false} />
-      <div className='navItemWrapper selected'>
-      <div className='navItem'></div>
+      {devices.map((d) => (
+        <NavLink
+          className='navItemWrapper'
+          activeClassName='selected'
+          to={`/device:${d.ipaddress}`}
+          key={d.ipaddress}
+        >
+          <div
+            className='navItem'
+            key={d.ipaddress}
+          />
+        </NavLink>
+      ))}
+        <NavLink
+          className='navItemWrapper'
+          activeClassName='selected'
+          to={'/settings'}
+        >
+          <div
+            className='navItem-settings'
+          />
+        </NavLink>
     </div>
-
-
-      <NavbarSettings />
-    </div>
-  )
+  );
 }

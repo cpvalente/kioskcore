@@ -49,38 +49,27 @@ export default function Dashboard() {
         <table>
           <tbody>
             <tr>
-              <td className='field'>Last seen:</td>
+              <td className='field'>Last seen</td>
               <td>{lastSeen}</td>
             </tr>
             <tr>
-              <td className='field'>Uptime:</td>
+              <td className='field'>Uptime</td>
               <td>{data[0].gen.upt}</td>
             </tr>
-          </tbody>
-        </table>
-      </div>
-      <div className='card card-network'>
-        <h3 className='cardTitle'>Network</h3>
-        <table>
-          <tbody>
             <tr>
-              <td className='field'>Date:</td>
+              <td className='field'>Date</td>
               <td>{data[0].time.d}</td>
             </tr>
             <tr>
-              <td className='field'>Time:</td>
+              <td className='field'>Time</td>
               <td>{data[0].time.t}</td>
             </tr>
             <tr>
-              <td className='field'>Firmware:</td>
-              <td>{data[0].gen.fw}</td>
-            </tr>
-            <tr>
-              <td className='field'>IP Address:</td>
+              <td className='field'>IP Address</td>
               <td>{data[0].ip.ip}</td>
             </tr>
             <tr>
-              <td className='field'>Subnet:</td>
+              <td className='field'>Subnet</td>
               <td>{data[0].ip.sn}</td>
             </tr>
           </tbody>
@@ -149,7 +138,6 @@ export default function Dashboard() {
         <h3 className='cardTitle'>Playback Status</h3>
         {data[1].playbacks.map((pb) => (
           <div className={pb.state === 1 ? 'indicator active' : 'indicator'}>
-            <span>{pb.label}</span>
             <span>
               {pb.cue}/{pb.list}
             </span>
@@ -161,16 +149,14 @@ export default function Dashboard() {
         <table>
           <thead>
             <tr>
-              <th>Timestamp</th>
               <th>From</th>
-              <th>Protocol</th>
+              <th>Prot.</th>
               <th>Message</th>
             </tr>
           </thead>
           <tbody>
             {data[2].tcpIn.map((tcp) => (
               <tr>
-                <td>15:04:10</td>
                 <td>{tcp.ip}</td>
                 <td>TCP</td>
                 <td>{tcp.arg}</td>
@@ -180,7 +166,7 @@ export default function Dashboard() {
         </table>
       </div>
       <div className='card card-heatmap'>
-        <h3 className='cardTitle'>Heatmap</h3>
+        <h3 className='cardTitle'>DMX Output A</h3>
             <Heatmap heatmapData={
               [...data[3].channels.data, ...data[4].channels.data]
             }/>

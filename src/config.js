@@ -3,18 +3,28 @@ export const config = {
   revisionDate: '12.02.2021',
   devices: [
     {
+      id: 1,
       name: 'DMX Output',
       type: 'Quadcore',
-      ipaddress: '192.168.1.10',
+      ipaddress: 'http://haarlem.visualproductions.nl:10015/',
       notes: 'Receives UDP from IOCore, runs lighting scenes',
       short: 'Q'
     },
     {
+      id: 2,
       name: 'Sensor Input',
       type: 'IOCore',
-      ipaddress: '192.168.1.11',
+      ipaddress: 'http://haarlem.visualproductions.nl:89/',
       notes: 'Receives data from 5 sensors and sends to Quadcore as UDP',
       short: 'I'
+    },
+    {
+      id: 3,
+      name: 'Dummy',
+      type: 'Cuecore',
+      ipaddress: 'http://haarlem.visualproductions.nl:84/',
+      notes: 'Just so I can get the data right',
+      short: 'C'
     },
   ],
     notes: '',

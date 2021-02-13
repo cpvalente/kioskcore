@@ -1,80 +1,39 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import DashboardGeneral from '../../common/components/dashboardGeneral';
 import DashboardHeatmap from '../../common/components/dashboardHeatmap';
 import DashboardInputs from '../../common/components/dashboardInputs';
 import DashboardMessages from '../../common/components/dashboardMessages';
 import DashboardPlaybacks from '../../common/components/dashboardPlaybacks';
+import Error from '../../common/components/error';
+import { config } from '../../config';
 import { getDummyData } from '../../data/dummyData';
+import CueDashboard from './cueDashboard';
+import './dashboard.css';
+import IODashboard from './ioDashboard';
+import QuadDashboard from './quadDashboard';
 
 export default function Dashboard() {
   const [data, setData] = useState(getDummyData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  async function getData() {
-    const url = 'http://haarlem.visualproductions.nl:84/'
-    Promise.all([
-      fetch(
-        `${url}ajax/get/index/status`
-      ).then((response) => response.json()),
+  const params = useParams();
+  // eslint-disable-next-line eqeqeq
+  const device = config.devices.find((d) => d.id == params.id);
 
-      fetch(
-        `${url}ajax/get/playback/playback`
-      ).then((response) => response.json()),
 
-      fetch(
-        `${url}ajax/get/monitor/tcp/in`
-      ).then((response) => response.json()),
-
-      fetch(
-        `${url}ajax/get/monitor/channels/0`
-      ).then((response) => response.json()),
-
-      fetch(
-        `${url}ajax/get/monitor/channels/256`
-      ).then((response) => response.json()),
-    ])
-    .then((data) => {
-      setData(data);
-      setLoading(false);
-    })
-    .catch(function(err) {
-      setError(true);
-      console.log(err.message);
-    });
+  if (device.type === 'Quadcore') {
+    return <QuadDashboard device={device} />
   }
 
-  useEffect(() => {
-    getData();
-  }, []);
+  else if (device.type === 'IOCore') {
+    return <IODashboard device={device} />
+  }
 
-  if (loading && !error)
-    return (
-      <div className='loadingSkeleton'>
-        <div className='card dashboardGeneralSkeleton' />
-        <div className='card dashboardInputsSkeleton' />
-        <div className='card dashboardPlaybacksSkeleton' />
-        <div className='card dashboardMessagesSkeleton' />
-        <div className='card dashboardHeatmapSkeleton' />
-      </div>
-    );
+  else if (device.type === 'IOCore') {
+    return <CueDashboard device={device} />
+  }
 
-  if (error)
-    return (
-      <div className='card error'>
-        There has been an issue getting your request
-      </div>
-    );
-
-  return (
-    <div className='dashboard'>
-      <DashboardGeneral data={data[0]} />
-      <DashboardInputs data={data[0]} />
-      <DashboardPlaybacks data={data[1]} />
-      <DashboardMessages data={data[2]} />
-      <DashboardHeatmap
-        data={[...data[3].channels.data, ...data[4].channels.data]}
-      />
-    </div>
-  );
+  else return <Error />;
 }

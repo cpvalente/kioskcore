@@ -15,32 +15,80 @@
   grid-row-gap: 4px;
 }
 
+/* ======================================= */
+/* ============ QUADCORE ================= */
+/* ======================================= */
+
+.quad >
 .card-general,
 .dashboardGeneralSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 1 / 4 / 6;
 }
 
+.quad >
 .card-inputs,
 .dashboardInputsSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 6 / 6 / 9;
 }
 
+.quad >
 .card-playback,
 .dashboardPlaybacksSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 4 / 1 / 6 / 6;
 }
 
+.quad >
 .card-messages,
 .dashboardMessagesSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 9 / 10 / 15;
 }
 
+.quad >
 .card-heatmap,
 .dashboardHeatmapSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 6 / 1 / 10 / 9;
+}
+
+/* ======================================= */
+/* ============== IOCORE ================= */
+/* ======================================= */
+
+.io >
+.card-general,
+.dashboardGeneralSkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 1 / 1 / 4 / 5;
+}
+
+.io >
+.card-inputs,
+.dashboardInputsSkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 4 / 1 / 10 / 5;
+}
+
+.io >
+.card-messages,
+.dashboardMessagesSkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 1 / 9 / 10 / 15;
+}
+
+.io >
+.card-gpi,
+.dashboardGPISkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 1 / 5 / 5 / 9;
+}
+
+.io >
+.card-gpo,
+.dashboardGPOSkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 5 / 5 / 10 / 9;
 }

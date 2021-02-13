@@ -49,7 +49,7 @@ export default function QuadDashboard({ device }) {
 
   if (loading && !error)
     return (
-      <div className='loadingSkeleton loadingSkeleton-quad'>
+      <div className='loadingSkeleton quad'>
         <div className='card dashboardGeneralSkeleton' />
         <div className='card dashboardInputsSkeleton' />
         <div className='card dashboardPlaybacksSkeleton' />
@@ -61,7 +61,7 @@ export default function QuadDashboard({ device }) {
   if (error) return <Error />;
 
   return (
-    <div className='dashboard dashboard-quad'>
+    <div className='dashboard quad'>
       <DashboardGeneral   data={data[0]} />
       <DashboardInputs    data={data[0]} />
       <DashboardPlaybacks data={data[1]} />

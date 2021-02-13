@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import DashboardGeneral from '../../common/components/dashboardGeneral';
-import DashboardHeatmap from '../../common/components/dashboardHeatmap';
+import DashboardGPI from '../../common/components/dashboardGPI';
+import DashboardGPO from '../../common/components/dashboardGPO';
 import DashboardInputs from '../../common/components/dashboardInputs';
 import DashboardMessages from '../../common/components/dashboardMessages';
-import DashboardPlaybacks from '../../common/components/dashboardPlaybacks';
 import Error from '../../common/components/error';
 import { getDummyData } from '../../data/dummyData';
 
@@ -37,22 +37,24 @@ export default function IODashboard({ device }) {
 
   if (loading && !error)
     return (
-      <div className='loadingSkeleton loadingSkeleton-io'>
+      <div className='loadingSkeleton io'>
         <div className='card dashboardGeneralSkeleton' />
         <div className='card dashboardInputsSkeleton' />
-        <div className='card dashboardPlaybacksSkeleton' />
         <div className='card dashboardMessagesSkeleton' />
-        <div className='card dashboardHeatmapSkeleton' />
+        <div className='card dashboardGPISkeleton' />
+        <div className='card dashboardGPOSkeleton' />
       </div>
     );
 
   if (error) return <Error />;
 
   return (
-    <div className='dashboard dashboard-io'>
+    <div className='dashboard io'>
     <DashboardGeneral  data={data[0]} />
     <DashboardInputs   data={data[0]} />
     <DashboardMessages data={data[1]} />
+    <DashboardGPI      data={data[0].gpi}/>
+    <DashboardGPO      data={data[0].gpo}/>
   </div>
   );
 }

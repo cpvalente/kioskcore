@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import DashboardGeneral from '../../common/components/dashboardGeneral';
+import DashboardHeatmap from '../../common/components/dashboardHeatmap';
 import DashboardInputs from '../../common/components/dashboardInputs';
 import DashboardMessages from '../../common/components/dashboardMessages';
 import DashboardPlaybacks from '../../common/components/dashboardPlaybacks';
 import { getDummyData } from '../../data/dummyData';
-import Heatmap from './heatmap';
 
 export default function Dashboard() {
 
@@ -41,7 +41,7 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    // getData();
+    getData();
   }, []);
 
   console.log(data[2])
@@ -49,16 +49,11 @@ export default function Dashboard() {
   return (
     <div className='dashboard'>
       <DashboardGeneral   data={data[0]}/>
-      <DashboardInputs    data={data[0]} />
+      <DashboardInputs    data={data[0]}/>
       <DashboardPlaybacks data={data[1]}/>
       <DashboardMessages  data={data[2]}/>
+      <DashboardHeatmap   data={[...data[3].channels.data, ...data[4].channels.data]}/>
 
-      <div className='card card-heatmap'>
-        <h3 className='cardTitle'>DMX Output A</h3>
-            <Heatmap heatmapData={
-              [...data[3].channels.data, ...data[4].channels.data]
-            }/>
-      </div>
     </div>
   );
 }

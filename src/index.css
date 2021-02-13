@@ -4,8 +4,7 @@ body {
   margin: 0;
   overflow: hidden;
 
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Roboto', sans-serif;
 
   font-size: 14px;
   color: #53a6fa;
@@ -13,8 +12,7 @@ body {
 
 .field {
   color: #4b7eb1;
-  padding-right: 1em;
-  width: 6em;
+  padding-right: 4px;
 }
 
 li,
@@ -34,7 +32,7 @@ p {
 
 .navbar {
   grid-area: navbar;
-  padding-top: 32px;
+  padding-top: 3em;
 
   display: flex;
   flex-direction: column;
@@ -43,7 +41,7 @@ p {
 }
 
 .navItemWrapper {
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
   height: 4em;
   width: 4em;
   border-radius: 1em 0 0 1em;
@@ -60,7 +58,6 @@ p {
   background-color: #26daad;
   box-shadow: 0 0 10px 0px #26daad66;
 }
-
 
 .navItem,
 .navItem-settings {
@@ -83,7 +80,9 @@ p {
   height: 100vh;
 }
 
-.settings, .dashboard, .loadingSkeleton {
+.settings,
+.dashboard,
+.loadingSkeleton {
   background-color: #30323a;
   box-sizing: border-box;
   margin: 8px 8px 8px 0;
@@ -105,7 +104,7 @@ p {
 
 .error {
   border-radius: 1em;
-  margin:3em;
+  margin: 3em;
   text-align: center;
   background-color: #d87979;
   color: #222;
@@ -116,37 +115,38 @@ p {
 }
 
 .cardTitle {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family: 'Roboto', sans-serif;
+
   font-size: 14px;
   line-height: 16px;
   font-weight: 400;
   color: #fffa;
   text-align: left;
-  padding: 8px;
+  padding: 8px 0 4px 8px;
   margin: 0;
-}
-
-.indicatorlist .cardTitle {
-  grid-area: 1 / 1 / 1 / 4;
 }
 
 .indicatorlist {
   display: inline-grid;
   grid-gap: 4px;
   padding: 4px;
-
 }
 
 .indicatorlist.card-playback {
-  grid-template-rows: 32px 1fr 1fr;
+  grid-template-rows: 26px 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
 .indicatorlist.card-inputs {
-  grid-template-rows: 32px 1fr 1fr 1fr;
+  grid-template-rows: 26px 1fr 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
+}
+
+.indicatorlist.card-playback .cardTitle {
+  grid-area: 1 / 1 / 1 / 4;
+}
+.indicatorlist.card-inputs .cardTitle {
+  grid-area: 1 / 1 / 1 / 4;
 }
 
 .indicator {
@@ -171,6 +171,8 @@ p {
 
 table {
   width: 100%;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 12px;
 }
 
@@ -189,7 +191,7 @@ td {
 
 td {
   letter-spacing: 0.5px;
-  line-height: 16px;
+  line-height: 15px;
 }
 
 tr:nth-child(odd) {
@@ -213,27 +215,32 @@ tr:nth-child(even) {
   border: 1px solid #45506022;
 }
 
-.card-general, .dashboardGeneralSkeleton {
+.card-general,
+.dashboardGeneralSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 1 / 4 / 6;
 }
 
-.card-inputs, .dashboardInputsSkeleton {
+.card-inputs,
+.dashboardInputsSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 6 / 6 / 9;
 }
 
-.card-playback, .dashboardPlaybacksSkeleton {
+.card-playback,
+.dashboardPlaybacksSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 4 / 1 / 6 / 6;
 }
 
-.card-messages, .dashboardMessagesSkeleton {
+.card-messages,
+.dashboardMessagesSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 9 / 10 / 15;
 }
 
-.card-heatmap, .dashboardHeatmapSkeleton {
+.card-heatmap,
+.dashboardHeatmapSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 6 / 1 / 10 / 9;
 }

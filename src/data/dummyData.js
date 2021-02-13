@@ -4,7 +4,7 @@ export function getDummyData() {
       gen: {
         serial: 'MyCueCore',
         upt: '7d 4h 26m',
-        fw: '1.38',
+        lbl: 'Retrieving data....',
       },
       ip: {
         ip: '192.168.1.14',
@@ -74,15 +74,14 @@ export function getDummyData() {
 
     {
       channels: {
-        data: [0]
-      }
+        data: [0],
+      },
     },
 
     {
       channels: {
-        data: [0]
-      }
+        data: [0],
+      },
     },
-
   ];
 }

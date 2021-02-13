@@ -1,4 +1,6 @@
 export default function DashboardMessages({ data }) {
+  // TODO: Find a better solution for generating ids
+
   return (
     <div className='card card-messages'>
       <h3 className='cardTitle'>Messages</h3>
@@ -11,8 +13,8 @@ export default function DashboardMessages({ data }) {
           </tr>
         </thead>
         <tbody>
-          {data.tcpIn.map((tcp) => (
-            <tr>
+          {data.tcpIn.map((tcp, index) => (
+            <tr key={index}>
               <td>{tcp.ip}</td>
               <td>TCP</td>
               <td>{tcp.arg}</td>

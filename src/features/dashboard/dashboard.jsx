@@ -14,9 +14,6 @@ import IODashboard from './ioDashboard';
 import QuadDashboard from './quadDashboard';
 
 export default function Dashboard() {
-  const [data, setData] = useState(getDummyData);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
 
   const params = useParams();
   // eslint-disable-next-line eqeqeq

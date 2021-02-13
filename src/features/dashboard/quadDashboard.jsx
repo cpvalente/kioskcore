@@ -63,8 +63,8 @@ export default function QuadDashboard({ device }) {
   return (
     <div className='dashboard quad'>
       <DashboardGeneral   data={data[0]} />
-      <DashboardInputs    data={data[0]} />
-      <DashboardPlaybacks data={data[1]} />
+      <DashboardInputs    data={data[0].receiving} />
+      <DashboardPlaybacks data={data[1].playbacks} />
       <DashboardMessages  data={data[2]} />
       <DashboardHeatmap
         data={[...data[3].channels.data, ...data[4].channels.data]}

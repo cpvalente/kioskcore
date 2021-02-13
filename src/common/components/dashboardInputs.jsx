@@ -2,6 +2,7 @@ import './components.css';
 import './indicator.css';
 
 export default function DashboardInputs({ data }) {
+
   const reader = {
     dd: 'DMX',
     d1: 'DMX A',
@@ -22,18 +23,18 @@ export default function DashboardInputs({ data }) {
   let isDMXActive = false;
   let rx = {};
 
-  for (let d in data.receiving) {
+  for (let d in data) {
     // merge all DMX Inputs into one indicator
     if (d === 'd1' || d === 'd2' || d === 'd3' || d === 'd4') {
       hasDMX = true;
 
       if (isDMXActive !== true) {
-        if (data.receiving[d] === 'yes') {
+        if (data[d] === 'yes') {
           isDMXActive = true;
         }
       }
     } else {
-      rx[reader[d]] = data.receiving[d];
+      rx[reader[d]] = data[d];
     }
   }
   if (hasDMX && !isDMXActive) {

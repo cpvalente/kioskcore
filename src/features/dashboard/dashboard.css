@@ -10,7 +10,7 @@
 
   display: grid;
   grid-template-columns: repeat(14, 1fr);
-  grid-template-rows: repeat(9, 1fr);
+  grid-template-rows: repeat(10, 1fr);
   grid-column-gap: 4px;
   grid-row-gap: 4px;
 }
@@ -21,37 +21,42 @@
 
 .quad >
 .card-general,
+.quad >
 .dashboardGeneralSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
-  grid-area: 1 / 1 / 4 / 6;
+  grid-area: 1 / 1 / 5 / 6;
 }
 
 .quad >
 .card-inputs,
+.quad >
 .dashboardInputsSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
-  grid-area: 1 / 6 / 6 / 9;
+  grid-area: 1 / 6 / 7 / 9;
 }
 
 .quad >
 .card-playback,
+.quad >
 .dashboardPlaybacksSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
-  grid-area: 4 / 1 / 6 / 6;
+  grid-area: 5 / 1 / 7 / 6;
 }
 
 .quad >
 .card-messages,
+.quad >
 .dashboardMessagesSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
-  grid-area: 1 / 9 / 10 / 15;
+  grid-area: 1 / 9 / 11 / 15;
 }
 
 .quad >
 .card-heatmap,
+.quad >
 .dashboardHeatmapSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
-  grid-area: 6 / 1 / 10 / 9;
+  grid-area: 7 / 1 / 11 / 9;
 }
 
 /* ======================================= */
@@ -60,6 +65,7 @@
 
 .io >
 .card-general,
+.io >
 .dashboardGeneralSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 1 / 4 / 5;
@@ -67,28 +73,32 @@
 
 .io >
 .card-inputs,
+.io >
 .dashboardInputsSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
-  grid-area: 4 / 1 / 10 / 5;
+  grid-area: 4 / 1 / 11 / 5;
 }
 
 .io >
 .card-messages,
+.io >
 .dashboardMessagesSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
-  grid-area: 1 / 9 / 10 / 15;
+  grid-area: 1 / 9 / 11 / 15;
 }
 
 .io >
 .card-gpi,
+.io >
 .dashboardGPISkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
-  grid-area: 1 / 5 / 5 / 9;
+  grid-area: 1 / 5 / 6 / 9;
 }
 
 .io >
 .card-gpo,
+.io >
 .dashboardGPOSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
-  grid-area: 5 / 5 / 10 / 9;
+  grid-area: 6 / 5 / 10 / 9;
 }

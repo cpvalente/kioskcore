@@ -51,7 +51,7 @@ export default function IODashboard({ device }) {
   return (
     <div className='dashboard io'>
     <DashboardGeneral  data={data[0]} />
-    <DashboardInputs   data={data[0]} />
+    <DashboardInputs   data={data[0].receiving} />
     <DashboardMessages data={data[1]} />
     <DashboardGPI      data={data[0].gpi}/>
     <DashboardGPO      data={data[0].gpo}/>

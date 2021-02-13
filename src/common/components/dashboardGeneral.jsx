@@ -16,14 +16,18 @@ export default function DashboardGeneral({ data }) {
             <td className='field'>Uptime</td>
             <td>{data.gen.upt}</td>
           </tr>
-          <tr>
-            <td className='field'>Date</td>
-            <td>{data.time.d}</td>
-          </tr>
-          <tr>
-            <td className='field'>Time</td>
-            <td>{data.time.t}</td>
-          </tr>
+          {data.time.d && (
+            <tr>
+              <td className='field'>Date</td>
+              <td>{data.time.d}</td>
+            </tr>
+          )}
+          {data.time.t && (
+            <tr>
+              <td className='field'>Time</td>
+              <td>{data.time.t}</td>
+            </tr>
+          )}
           <tr>
             <td className='field'>IP Address</td>
             <td>{data.ip.ip}</td>

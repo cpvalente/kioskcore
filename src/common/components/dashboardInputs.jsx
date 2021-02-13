@@ -1,63 +1,57 @@
 export default function DashboardInputs({ data }) {
+  const reader = {
+    dd: 'DMX',
+    d1: 'DMX A',
+    d2: 'DMX B',
+    d3: 'DMX C',
+    d4: 'DMX D',
+    midi: 'MIDI',
+    m: 'MIDI',
+    a: 'Art-Net',
+    s: 'sACN',
+    t: 'TCP',
+    u: 'UDP',
+    o: 'OSC',
+    rs232: 'RS-232',
+  };
+
+  let hasDMX = false;
+  let isDMXActive = false;
+  let rx = {};
+
+  for (let d in data.receiving) {
+    // merge all DMX Inputs into one indicator
+    if (d === 'd1' || d === 'd2' || d === 'd3' || d === 'd4') {
+      hasDMX = true;
+
+      if (isDMXActive !== true) {
+        if (data.receiving[d] === 'yes') {
+          isDMXActive = true;
+        }
+      }
+    } else {
+      rx[reader[d]] = data.receiving[d];
+    }
+  }
+  if (hasDMX && !isDMXActive) {
+    rx[reader['dd']] = 'no';
+  }
+  if (hasDMX && isDMXActive) {
+    rx[reader['dd']] = 'yes';
+  }
+
   return (
     <div className='card card-inputs indicatorlist'>
       <h3 className='cardTitle'>Inputs</h3>
-      <div
-        className={
-          data.receiving.d1 === 'yes' ? 'indicator active' : 'indicator'
-        }
-      >
-        DMX A
-      </div>
-      <div
-        className={
-          data.receiving.d2 === 'yes' ? 'indicator active' : 'indicator'
-        }
-      >
-        DMX B
-      </div>
-      <div
-        className={
-          data.receiving.midi === 'yes' ? 'indicator active' : 'indicator'
-        }
-      >
-        MIDI
-      </div>
-      <div
-        className={
-          data.receiving.a === 'yes' ? 'indicator active' : 'indicator'
-        }
-      >
-        Art-Net
-      </div>
-      <div
-        className={
-          data.receiving.s === 'yes' ? 'indicator active' : 'indicator'
-        }
-      >
-        sACN
-      </div>
-      <div
-        className={
-          data.receiving.t === 'yes' ? 'indicator active' : 'indicator'
-        }
-      >
-        TCP
-      </div>
-      <div
-        className={
-          data.receiving.u === 'yes' ? 'indicator active' : 'indicator'
-        }
-      >
-        UDP
-      </div>
-      <div
-        className={
-          data.receiving.o === 'yes' ? 'indicator active' : 'indicator'
-        }
-      >
-        OSC
-      </div>
+
+      {Object.entries(rx).map(([key, value]) => (
+        <div
+          className={value === 'yes' ? 'indicator active' : 'indicator'}
+          key={key}
+        >
+          <span>{key}</span>
+        </div>
+      ))}
     </div>
   );
 }

@@ -3,9 +3,13 @@
   background-color: #272c33;
 }
 
+.card-messages {
+  overflow-y: auto;
+}
+
 .error {
   border-radius: 1em;
-  margin: 3em;
+  margin: 45px 90px 90px 90px;
   text-align: center;
   background-color: #d87979;
   color: #222;

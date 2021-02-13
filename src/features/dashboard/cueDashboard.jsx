@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DashboardGeneral from '../../common/components/dashboardGeneral';
 import DashboardHeatmap from '../../common/components/dashboardHeatmap';
 import DashboardInputs from '../../common/components/dashboardInputs';
@@ -11,6 +11,7 @@ export default function CueDashboard({ device }) {
   const [data, setData] = useState(getDummyData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const isMountedRef = useRef(null);
 
   async function getCuecoreData() {
     const url = device.ipaddress;
@@ -34,22 +35,31 @@ export default function CueDashboard({ device }) {
       ),
     ])
       .then((data) => {
-        setData(data);
-        setLoading(false);
+        if (isMountedRef.current) {
+          setData(data);
+          setLoading(false);
+        }
       })
       .catch(function (err) {
-        setError(true);
-        console.log(err.message);
+        if (isMountedRef.current) {
+          setError(true);
+          console.log(err.message);
+        }
       });
   }
 
   useEffect(() => {
-    getCuecoreData(device.type);
-  }, []);
+    isMountedRef.current = true;
+    getCuecoreData();
+
+    return function cleanup() {
+      isMountedRef.current = false;
+    };
+  });
 
   if (loading && !error)
     return (
-      <div className='loadingSkeleton loadingSkeleton-cue'>
+      <div className='loadingSkeleton cue'>
         <div className='card dashboardGeneralSkeleton' />
         <div className='card dashboardInputsSkeleton' />
         <div className='card dashboardPlaybacksSkeleton' />
@@ -61,11 +71,11 @@ export default function CueDashboard({ device }) {
   if (error) return <Error />;
 
   return (
-    <div className='dashboard dashboard-cue'>
-      <DashboardGeneral   data={data[0]} />
-      <DashboardInputs    data={data[0]} />
-      <DashboardPlaybacks data={data[1]} />
-      <DashboardMessages  data={data[2]} />
+    <div className='dashboard cue'>
+      <DashboardGeneral data={data[0]} />
+      <DashboardInputs data={data[0].receiving} />
+      <DashboardPlaybacks data={data[1].playbacks} />
+      <DashboardMessages data={data[2]} />
       <DashboardHeatmap
         data={[...data[3].channels.data, ...data[4].channels.data]}
       />

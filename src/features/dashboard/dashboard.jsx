@@ -1,13 +1,6 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import DashboardGeneral from '../../common/components/dashboardGeneral';
-import DashboardHeatmap from '../../common/components/dashboardHeatmap';
-import DashboardInputs from '../../common/components/dashboardInputs';
-import DashboardMessages from '../../common/components/dashboardMessages';
-import DashboardPlaybacks from '../../common/components/dashboardPlaybacks';
 import Error from '../../common/components/error';
 import { config } from '../../config';
-import { getDummyData } from '../../data/dummyData';
 import CueDashboard from './cueDashboard';
 import './dashboard.css';
 import IODashboard from './ioDashboard';
@@ -28,7 +21,7 @@ export default function Dashboard() {
     return <IODashboard device={device} />
   }
 
-  else if (device.type === 'IOCore') {
+  else if (device.type === 'Cuecore') {
     return <CueDashboard device={device} />
   }
 

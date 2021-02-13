@@ -11,7 +11,7 @@ export default function Settings() {
 
       <div className='card-settings-devices'>
         {config.devices.map((dev) => (
-          <div className='card card-settings-device'>
+          <div className='card card-settings-device' key={dev.id}>
             <h3 className='cardTitle'>{dev.name}</h3>
             <table>
               <tbody>

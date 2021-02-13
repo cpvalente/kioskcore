@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DashboardGeneral from '../../common/components/dashboardGeneral';
 import DashboardGPI from '../../common/components/dashboardGPI';
 import DashboardGPO from '../../common/components/dashboardGPO';
@@ -11,6 +11,7 @@ export default function IODashboard({ device }) {
   const [data, setData] = useState(getDummyData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const isMountedRef = useRef(null);
 
   async function getIOCoreData() {
     const url = device.ipaddress;
@@ -22,18 +23,27 @@ export default function IODashboard({ device }) {
       ),
     ])
       .then((data) => {
-        setData(data);
-        setLoading(false);
+        if (isMountedRef.current) {
+          setData(data);
+          setLoading(false);
+        }
       })
       .catch(function (err) {
-        setError(true);
-        console.log(err.message);
+        if (isMountedRef.current) {
+          setError(true);
+          console.log(err.message);
+        }
       });
   }
 
   useEffect(() => {
-    getIOCoreData(device.type);
-  }, []);
+    isMountedRef.current = true;
+    getIOCoreData();
+
+    return function cleanup() {
+      isMountedRef.current = false;
+    };
+  });
 
   if (loading && !error)
     return (
@@ -50,11 +60,11 @@ export default function IODashboard({ device }) {
 
   return (
     <div className='dashboard io'>
-    <DashboardGeneral  data={data[0]} />
-    <DashboardInputs   data={data[0].receiving} />
-    <DashboardMessages data={data[1]} />
-    <DashboardGPI      data={data[0].gpi}/>
-    <DashboardGPO      data={data[0].gpo}/>
-  </div>
+      <DashboardGeneral data={data[0]} />
+      <DashboardInputs data={data[0].receiving} />
+      <DashboardMessages data={data[1]} />
+      <DashboardGPI data={data[0].gpi} />
+      <DashboardGPO data={data[0].gpo} />
+    </div>
   );
 }

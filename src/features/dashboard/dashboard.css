@@ -102,3 +102,47 @@
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 6 / 5 / 10 / 9;
 }
+
+/* ======================================= */
+/* ============ CUECORE ================= */
+/* ======================================= */
+
+.cue >
+.card-general,
+.cue >
+.dashboardGeneralSkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 1 / 1 / 5 / 6;
+}
+
+.cue >
+.card-inputs,
+.cue >
+.dashboardInputsSkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 1 / 6 / 7 / 9;
+}
+
+.cue >
+.card-playback,
+.cue >
+.dashboardPlaybacksSkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 5 / 1 / 7 / 6;
+}
+
+.cue >
+.card-messages,
+.cue >
+.dashboardMessagesSkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 1 / 9 / 11 / 15;
+}
+
+.cue >
+.card-heatmap,
+.cue >
+.dashboardHeatmapSkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 7 / 1 / 11 / 9;
+}

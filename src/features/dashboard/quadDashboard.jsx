@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DashboardGeneral from '../../common/components/dashboardGeneral';
 import DashboardHeatmap from '../../common/components/dashboardHeatmap';
 import DashboardInputs from '../../common/components/dashboardInputs';
@@ -11,6 +11,7 @@ export default function QuadDashboard({ device }) {
   const [data, setData] = useState(getDummyData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const isMountedRef = useRef(null);
 
   async function getQuadcoreData() {
     const url = device.ipaddress;
@@ -34,18 +35,27 @@ export default function QuadDashboard({ device }) {
       ),
     ])
       .then((data) => {
-        setData(data);
-        setLoading(false);
+        if (isMountedRef.current) {
+          setData(data);
+          setLoading(false);
+        }
       })
       .catch(function (err) {
-        setError(true);
-        console.log(err.message);
+        if (isMountedRef.current) {
+          setError(true);
+          console.log(err.message);
+        }
       });
   }
 
   useEffect(() => {
-    getQuadcoreData(device.type);
-  }, []);
+    isMountedRef.current = true;
+    getQuadcoreData();
+
+    return function cleanup() {
+      isMountedRef.current = false;
+    };
+  });
 
   if (loading && !error)
     return (
@@ -62,10 +72,10 @@ export default function QuadDashboard({ device }) {
 
   return (
     <div className='dashboard quad'>
-      <DashboardGeneral   data={data[0]} />
-      <DashboardInputs    data={data[0].receiving} />
+      <DashboardGeneral data={data[0]} />
+      <DashboardInputs data={data[0].receiving} />
       <DashboardPlaybacks data={data[1].playbacks} />
-      <DashboardMessages  data={data[2]} />
+      <DashboardMessages data={data[2]} />
       <DashboardHeatmap
         data={[...data[3].channels.data, ...data[4].channels.data]}
       />

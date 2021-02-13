@@ -1,0 +1,44 @@
+.indicator {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  font-size: 14px;
+
+  padding: 0 4px;
+  background-color: #45506055;
+  border-radius: 0.2em;
+  color: #53a6fa99;
+}
+
+.indicator.active {
+  background-color: #26daad;
+  color: #fffffa;
+}
+
+
+.indicatorlist {
+  display: inline-grid;
+  grid-gap: 4px;
+  padding: 4px;
+}
+
+.indicatorlist.card-playback {
+  grid-template-rows: 26px 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.indicatorlist.card-inputs {
+  grid-template-rows: 26px 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.indicatorlist.card-playback .cardTitle {
+  grid-area: 1 / 1 / 1 / 4;
+}
+.indicatorlist.card-inputs .cardTitle {
+  grid-area: 1 / 1 / 1 / 4;
+}
+

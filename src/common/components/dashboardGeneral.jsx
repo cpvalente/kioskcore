@@ -1,3 +1,5 @@
+import './components.css';
+
 export default function DashboardGeneral({ data }) {
   const lastSeen = '11.02.2021 19:59:23';
 

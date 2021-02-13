@@ -1,3 +1,6 @@
+import './components.css';
+import './heatmap.css';
+
 import Heatmap from '../../features/dashboard/heatmap';
 
 export default function DashboardHeatmap({ data }) {

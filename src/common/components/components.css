@@ -1,0 +1,67 @@
+
+.card {
+  border-radius: 0.5em;
+  background-color: #272c33;
+}
+
+.error {
+  border-radius: 1em;
+  margin: 3em;
+  text-align: center;
+  background-color: #d87979;
+  color: #222;
+  font-size: 30px;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+.cardTitle {
+  font-family: 'Roboto', sans-serif;
+
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #fffa;
+  text-align: left;
+  padding: 8px 0 4px 8px;
+  margin: 0;
+}
+
+table {
+  width: 100%;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+}
+
+th {
+  text-align: left;
+  font-style: normal;
+  font-weight: 400;
+  color: #fffffa88;
+}
+
+th,
+tr,
+td {
+  padding-left: 4px;
+}
+
+td {
+  letter-spacing: 0.5px;
+  line-height: 15px;
+}
+
+.field {
+  color: #4b7eb1;
+  padding-right: 4px;
+}
+
+
+tr:nth-child(odd) {
+  background: #45506022;
+}
+tr:nth-child(even) {
+  background: #45506033;
+}

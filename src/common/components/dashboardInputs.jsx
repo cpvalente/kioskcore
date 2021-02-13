@@ -1,3 +1,6 @@
+import './components.css';
+import './indicator.css';
+
 export default function DashboardInputs({ data }) {
   const reader = {
     dd: 'DMX',

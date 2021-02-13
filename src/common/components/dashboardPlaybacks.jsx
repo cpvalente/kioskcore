@@ -1,3 +1,5 @@
+import './components.css';
+
 export default function DashboardPlaybacks({ data }) {
   return (
     <div className='card card-playback indicatorlist'>

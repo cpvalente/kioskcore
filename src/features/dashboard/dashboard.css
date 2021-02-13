@@ -1,0 +1,46 @@
+.settings,
+.dashboard,
+.loadingSkeleton {
+  background-color: #30323a;
+  box-sizing: border-box;
+  margin: 8px 8px 8px 0;
+  padding: 4px;
+  border-radius: 0.5em;
+  height: calc(100vh - 16px);
+
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  grid-column-gap: 4px;
+  grid-row-gap: 4px;
+}
+
+.card-general,
+.dashboardGeneralSkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 1 / 1 / 4 / 6;
+}
+
+.card-inputs,
+.dashboardInputsSkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 1 / 6 / 6 / 9;
+}
+
+.card-playback,
+.dashboardPlaybacksSkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 4 / 1 / 6 / 6;
+}
+
+.card-messages,
+.dashboardMessagesSkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 1 / 9 / 10 / 15;
+}
+
+.card-heatmap,
+.dashboardHeatmapSkeleton {
+  /* grid row start / grid col start / grid row end /grid col end */
+  grid-area: 6 / 1 / 10 / 9;
+}

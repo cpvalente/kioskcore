@@ -1,4 +1,5 @@
 import { config } from '../../config';
+import './settings.css';
 
 export default function Settings() {
   return (

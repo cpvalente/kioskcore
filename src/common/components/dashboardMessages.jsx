@@ -1,3 +1,7 @@
+import './components.css';
+import './indicator.css';
+
+
 export default function DashboardMessages({ data }) {
   // TODO: Find a better solution for generating ids
 

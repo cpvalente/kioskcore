@@ -1,0 +1,54 @@
+.navbar {
+  grid-area: navbar;
+  padding-top: 3em;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
+.navItemWrapper {
+  margin-bottom: 1.5em;
+  height: 4em;
+  width: 4em;
+  border-radius: 1em 0 0 1em;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+.navItemWrapper.selected {
+  background-color: #30323a;
+}
+
+.navItemWrapper.selected > .navItem {
+  background-color: #26daad;
+  box-shadow: 0 0 10px 0px #26daad66;
+}
+
+.navItem,
+.navItem-settings {
+  height: 2em;
+  width: 2em;
+  margin: auto;
+  border-radius: 1em;
+  text-align: center;
+  display: flex;
+}
+
+.navItem > .deviceShort {
+  text-decoration: none;
+  color: #fffffa;
+  margin: auto;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.navItemWrapper > .navItem {
+  background-color: #26daadaa;
+}
+
+.navItemWrapper > .navItem-settings {
+  background: url(../../assets/images/settings.svg);
+}

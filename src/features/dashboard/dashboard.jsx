@@ -7,36 +7,40 @@ import DashboardPlaybacks from '../../common/components/dashboardPlaybacks';
 import { getDummyData } from '../../data/dummyData';
 
 export default function Dashboard() {
-
   const [data, setData] = useState(getDummyData);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   async function getData() {
+    const url = 'http://haarlem.visualproductions.nl:84/'
     Promise.all([
       fetch(
-        'http://haarlem.visualproductions.nl:84/ajax/get/index/status'
+        `${url}ajax/get/index/status`
       ).then((response) => response.json()),
 
       fetch(
-        'http://haarlem.visualproductions.nl:84/ajax/get/playback/playback'
+        `${url}ajax/get/playback/playback`
       ).then((response) => response.json()),
 
       fetch(
-        'http://haarlem.visualproductions.nl:84/ajax/get/monitor/tcp/in'
+        `${url}ajax/get/monitor/tcp/in`
       ).then((response) => response.json()),
 
       fetch(
-        'http://haarlem.visualproductions.nl:84/ajax/get/monitor/channels/0'
+        `${url}ajax/get/monitor/channels/0`
       ).then((response) => response.json()),
 
       fetch(
-        'http://haarlem.visualproductions.nl:84/ajax/get/monitor/channels/256'
+        `${url}ajax/get/monitor/channels/256`
       ).then((response) => response.json()),
-
-
-    ]).then((data) => {
-      console.log(data);
+    ])
+    .then((data) => {
       setData(data);
+      setLoading(false);
+    })
+    .catch(function(err) {
+      setError(true);
+      console.log(err.message);
     });
   }
 
@@ -44,16 +48,33 @@ export default function Dashboard() {
     getData();
   }, []);
 
-  console.log(data[2])
+  if (loading && !error)
+    return (
+      <div className='loadingSkeleton'>
+        <div className='card dashboardGeneralSkeleton' />
+        <div className='card dashboardInputsSkeleton' />
+        <div className='card dashboardPlaybacksSkeleton' />
+        <div className='card dashboardMessagesSkeleton' />
+        <div className='card dashboardHeatmapSkeleton' />
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className='card error'>
+        There has been an issue getting your request
+      </div>
+    );
 
   return (
     <div className='dashboard'>
-      <DashboardGeneral   data={data[0]}/>
-      <DashboardInputs    data={data[0]}/>
-      <DashboardPlaybacks data={data[1]}/>
-      <DashboardMessages  data={data[2]}/>
-      <DashboardHeatmap   data={[...data[3].channels.data, ...data[4].channels.data]}/>
-
+      <DashboardGeneral data={data[0]} />
+      <DashboardInputs data={data[0]} />
+      <DashboardPlaybacks data={data[1]} />
+      <DashboardMessages data={data[2]} />
+      <DashboardHeatmap
+        data={[...data[3].channels.data, ...data[4].channels.data]}
+      />
     </div>
   );
 }

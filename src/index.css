@@ -83,7 +83,7 @@ p {
   height: 100vh;
 }
 
-.settings, .dashboard {
+.settings, .dashboard, .loadingSkeleton {
   background-color: #30323a;
   box-sizing: border-box;
   margin: 8px 8px 8px 0;
@@ -101,6 +101,18 @@ p {
 .card {
   border-radius: 0.5em;
   background-color: #272c33;
+}
+
+.error {
+  border-radius: 1em;
+  margin:3em;
+  text-align: center;
+  background-color: #d87979;
+  color: #222;
+  font-size: 30px;
+  display: flex;
+  justify-items: center;
+  align-items: center;
 }
 
 .cardTitle {
@@ -201,27 +213,27 @@ tr:nth-child(even) {
   border: 1px solid #45506022;
 }
 
-.card-general {
+.card-general, .dashboardGeneralSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 1 / 4 / 6;
 }
 
-.card-inputs {
+.card-inputs, .dashboardInputsSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 6 / 6 / 9;
 }
 
-.card-playback {
+.card-playback, .dashboardPlaybacksSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 4 / 1 / 6 / 6;
 }
 
-.card-messages {
+.card-messages, .dashboardMessagesSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 9 / 10 / 15;
 }
 
-.card-heatmap {
+.card-heatmap, .dashboardHeatmapSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 6 / 1 / 10 / 9;
 }

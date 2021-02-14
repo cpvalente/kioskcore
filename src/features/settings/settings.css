@@ -25,6 +25,7 @@
 .card-settings-title > .cardTitle {
   font-size: 20px;
   line-height: 28px;
+  color: #fffffa
 }
 
 .card-settings-title > .cardSub {
@@ -32,4 +33,5 @@
   line-height: 22px;
   padding-left: 8px;
   margin: 0;
+  color: #4b7eb1;
 }

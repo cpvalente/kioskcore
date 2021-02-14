@@ -7,7 +7,7 @@
 
   font-size: 14px;
 
-  padding: 0 0px;
+  padding: 2px 0px;
   border-radius: 0.2em;
   color: #53a6fa99;
 }
@@ -26,6 +26,6 @@
   grid-gap: 4px;
 }
 
-.cardTitle {
-  padding: 4px;
+.card-messages {
+  overflow-y: auto;
 }

@@ -15,26 +15,35 @@ export default function DashboardGPI({ data }) {
   for (let d in data) {
     let regex = /\d+/g;
     let index = parseInt(d.match(regex)) - 1;
+    let val = data[d];
 
     if (d.includes('Value')) {
-      gpi[index].gpiValue = data[d];
+      if (val === '0%') {
+        gpi[index].gpiValue = 'Off';
+      } else {
+        gpi[index].gpiValue = val;
+      }
     } else {
-      if (data[d] === '') gpi[index].gpiName = `GPI ${index}`;
-      else gpi[index].gpiName = data[d];
+      if (val === '') gpi[index].gpiName = `GPI ${index}`;
+      else gpi[index].gpiName = val;
     }
   }
 
   return (
-    <div className='card card-gpi indicatorlist'>
+    <div className='card card-gpi '>
       <h3 className='cardTitle'>GPI</h3>
-      {gpi.map((g, index) => (
-        <div
-          className={g.gpiValue === 'Off' ? 'indicator' : 'indicator active'}
-          key={index}
-        >
-          <span>{g.gpiName} / {g.gpiValue}</span>
-        </div>
-      ))}
+      <div className='cardContent indicatorlist'>
+        {gpi.map((g, index) => (
+          <div
+            className={g.gpiValue === 'Off' ? 'indicator' : 'indicator active'}
+            key={index}
+          >
+            <span>
+              {g.gpiName} / {g.gpiValue}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

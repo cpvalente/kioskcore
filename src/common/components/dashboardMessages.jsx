@@ -13,7 +13,6 @@ export default function DashboardMessages({ url, type }) {
   const isMountedRef = useRef(null);
 
   async function getNetworkData() {
-
     if (select === 'TCP') {
       Promise.all([
         fetch(`${url}ajax/get/monitor/tcp/in`).then((response) =>
@@ -97,7 +96,6 @@ export default function DashboardMessages({ url, type }) {
       ])
         .then((data) => {
           if (isMountedRef.current) {
-            console.log(data)
             setDataIn(data[0].rs232In);
             setDataOut(data[1].rs232Out);
             setLoading(false);
@@ -139,8 +137,8 @@ export default function DashboardMessages({ url, type }) {
     return function cleanup() {
       isMountedRef.current = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [select]);
-
 
   useInterval(() => {
     if (isMountedRef.current) {
@@ -150,136 +148,135 @@ export default function DashboardMessages({ url, type }) {
     }
   }, 3000);
 
-  if (loading && !error)
-  return (
-    <div className='card card-messages'></div>
-  );
+  if (loading && !error) return <div className='card card-messages'></div>;
 
   return (
     <div className='card card-messages'>
       <h3 className='cardTitle'>Messages</h3>
-      <div className='selectors'>
-        <div
-          className={select === 'TCP' ? 'selector active' : 'selector'}
-          onClick={() => setSelect('TCP')}
-        >
-          TCP
+      <div className='cardContent'>
+        <div className='selectors'>
+          <div
+            className={select === 'TCP' ? 'selector active' : 'selector'}
+            onClick={() => setSelect('TCP')}
+          >
+            TCP
+          </div>
+          <div
+            className={select === 'UDP' ? 'selector active' : 'selector'}
+            onClick={() => setSelect('UDP')}
+          >
+            UDP
+          </div>
+          <div
+            className={select === 'OSC' ? 'selector active' : 'selector'}
+            onClick={() => setSelect('OSC')}
+          >
+            OSC
+          </div>
+          {type === 'IOCore' && (
+            <div
+              className={select === 'RS232' ? 'selector active' : 'selector'}
+              onClick={() => setSelect('RS232')}
+            >
+              RS232
+            </div>
+          )}
         </div>
-        <div
-          className={select === 'UDP' ? 'selector active' : 'selector'}
-          onClick={() => setSelect('UDP')}
-        >
-          UDP
-        </div>
-        <div
-          className={select === 'OSC' ? 'selector active' : 'selector'}
-          onClick={() => setSelect('OSC')}
-        >
-          OSC
-        </div>
-        {(type === 'IOCore') &&
-        <div
-          className={select === 'RS232' ? 'selector active' : 'selector'}
-          onClick={() => setSelect('RS232')}
-        >
-          RS232
-        </div>
-        }
+
+        {/* TCP TABLE */}
+        {(select === 'TCP' || select === 'UDP') && (
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Address</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dataIn.map((d, index) => (
+                <tr key={index}>
+                  <td className='field'>RX</td>
+                  <td>{d.ip}</td>
+                  <td>{d.arg}</td>
+                </tr>
+              ))}
+            </tbody>
+            <tbody>
+              {dataOut.map((d, index) => (
+                <tr key={index}>
+                  <td className='field'>TX</td>
+                  <td>{d.ip}</td>
+                  <td>{d.arg}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+
+        {/* OSC TABLE */}
+        {select === 'OSC' && (
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Address</th>
+                <th>URL</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dataIn.map((d, index) => (
+                <tr key={index}>
+                  <td className='field'>RX</td>
+                  <td>{d.ip}</td>
+                  <td>{d.uri}</td>
+                  <td>{d.arg}</td>
+                </tr>
+              ))}
+            </tbody>
+            <tbody>
+              {dataOut.map((d, index) => (
+                <tr key={index}>
+                  <td className='field'>TX</td>
+                  <td>{d.ip}</td>
+                  <td>{d.uri}</td>
+                  <td>{d.arg}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+
+        {/* RS232 TABLE */}
+        {select === 'RS232' && (
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dataIn.map((d, index) => (
+                <tr key={index}>
+                  <td className='field'>RX</td>
+                  <td>{d.v}</td>
+                </tr>
+              ))}
+            </tbody>
+
+            <tbody>
+              {dataOut.map((d, index) => (
+                <tr key={index}>
+                  <td className='field'>TX</td>
+                  <td>{d.v}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
-
-      {/* TCP TABLE */}
-      {(select === 'TCP' || select === 'UDP') && (
-        <table>
-          <thead>
-            <tr>
-              <th style={{ columnWidth: '3em;' }}></th>
-              <th>Address</th>
-              <th>Message</th>
-            </tr>
-          </thead>
-          <tbody>
-            {dataIn.map((d, index) => (
-              <tr key={index}>
-                <td className='field'>RX</td>
-                <td>{d.ip}</td>
-                <td>{d.arg}</td>
-              </tr>
-            ))}
-          </tbody>
-          <tbody>
-            {dataOut.map((d, index) => (
-              <tr key={index}>
-                <td className='field'>TX</td>
-                <td>{d.ip}</td>
-                <td>{d.arg}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-
-      {/* OSC TABLE */}
-      {select === 'OSC' && (
-        <table>
-          <thead>
-            <tr>
-              <th style={{ columnWidth: '3em;' }}></th>
-              <th>Address</th>
-              <th>URL</th>
-              <th>Message</th>
-            </tr>
-          </thead>
-          <tbody>
-            {dataIn.map((d, index) => (
-              <tr key={index}>
-                <td className='field'>RX</td>
-                <td>{d.ip}</td>
-                <td>{d.uri}</td>
-                <td>{d.arg}</td>
-              </tr>
-            ))}
-          </tbody>
-          <tbody>
-            {dataOut.map((d, index) => (
-              <tr key={index}>
-                <td className='field'>TX</td>
-                <td>{d.ip}</td>
-                <td>{d.uri}</td>
-                <td>{d.arg}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-
-      {/* RS232 TABLE */}
-      {select === 'RS232' && (
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Message</th>
-            </tr>
-          </thead>
-          <tbody>
-            {dataIn.map((d, index) => (
-              <tr key={index}>
-                <td className='field'>RX</td>
-                <td>{d.v}</td>
-              </tr>
-            ))}
-          </tbody>
-
-          <tbody>
-            {dataOut.map((d, index) => (
-              <tr key={index}>
-                <td className='field'>TX</td>
-                <td>{d.v}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
     </div>
   );
 }

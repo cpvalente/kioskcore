@@ -21,35 +21,20 @@
 .indicatorlist {
   display: inline-grid;
   grid-gap: 4px;
-  padding: 4px;
+  padding: 2px;
 }
 
-.indicatorlist.card-playback {
-  grid-template-rows: 26px 1fr 1fr;
+.card-playback > .indicatorlist {
+  grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.indicatorlist.card-playback .cardTitle {
-  grid-area: 1 / 1 / 1 / 4;
-}
-
-.indicatorlist.card-inputs {
-  grid-template-rows: 26px 1fr 1fr 1fr;
+.card-inputs > .indicatorlist {
+  grid-template-rows: 1fr 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.indicatorlist.card-inputs .cardTitle {
-  grid-area: 1 / 1 / 1 / 4;
-}
-
-.indicatorlist.card-gpo,
-.indicatorlist.card-gpi {
-  grid-template-rows: 26px 1fr 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
+.card-gpo > .indicatorlist,
+.card-gpi > .indicatorlist {
   grid-auto-flow: row;
-}
-
-.card-gpo .cardTitle,
-.card-gpi .cardTitle {
-  grid-area: 1 / 1 / 1 / 3;
 }

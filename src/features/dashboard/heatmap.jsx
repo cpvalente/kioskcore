@@ -1,6 +1,6 @@
 export default function Heatmap({ heatmapData }) {
   return (
-    <div className='heatmapgrid'>
+    <div className='heatmapgrid cardContent'>
       {heatmapData.map((d, index) => {
         const val = (d + 5) / 255.0;
         return (

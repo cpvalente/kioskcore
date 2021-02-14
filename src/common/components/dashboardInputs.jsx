@@ -2,7 +2,6 @@ import './components.css';
 import './indicator.css';
 
 export default function DashboardInputs({ data }) {
-
   const reader = {
     dd: 'DMX',
     d1: 'DMX A',
@@ -45,17 +44,18 @@ export default function DashboardInputs({ data }) {
   }
 
   return (
-    <div className='card card-inputs indicatorlist'>
+    <div className='card card-inputs'>
       <h3 className='cardTitle'>Inputs</h3>
-
-      {Object.entries(rx).map(([key, value]) => (
-        <div
-          className={value === 'yes' ? 'indicator active' : 'indicator'}
-          key={key}
-        >
-          <span>{key}</span>
-        </div>
-      ))}
+      <div className='cardContent indicatorlist'>
+        {Object.entries(rx).map(([key, value]) => (
+          <div
+            className={value === 'yes' ? 'indicator active' : 'indicator'}
+            key={key}
+          >
+            <span>{key}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

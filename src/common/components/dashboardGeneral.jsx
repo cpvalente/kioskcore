@@ -6,7 +6,7 @@ export default function DashboardGeneral({ data }) {
   return (
     <div className='card card-general'>
       <h3 className='cardTitle'>{data.gen.lbl}</h3>
-      <table>
+      <table className='cardContent'>
         <tbody>
           <tr>
             <td className='field'>Last seen</td>

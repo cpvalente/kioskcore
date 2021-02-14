@@ -25,16 +25,20 @@ export default function DashboardGPO({ data }) {
   }
 
   return (
-    <div className='card card-gpo indicatorlist'>
+    <div className='card card-gpo'>
       <h3 className='cardTitle'>GPO</h3>
-      {gpo.map((g, index) => (
-        <div
-          className={g.gpoValue === 1 ? 'indicator active' : 'indicator'}
-          key={index}
-        >
-          <span>{g.gpoName} / {g.gpoValue}</span>
-        </div>
-      ))}
+      <div className='cardContent indicatorlist'>
+        {gpo.map((g, index) => (
+          <div
+            className={g.gpoValue === 1 ? 'indicator active' : 'indicator'}
+            key={index}
+          >
+            <span>
+              {g.gpoName} / {g.gpoValue}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

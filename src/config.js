@@ -1,3 +1,8 @@
+// config is used to populate windows,
+// device.type   can be Quadcore, IOCore, Cuecore
+// device.id     must exist and be unique
+// device.short  populates UI
+
 export const config = {
   projectTitle: 'Kringjså Skole',
   revisionDate: '12.02.2021',

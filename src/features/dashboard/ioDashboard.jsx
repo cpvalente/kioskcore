@@ -59,6 +59,7 @@ export default function IODashboard({ device }) {
     return function cleanup() {
       isMountedRef.current = false;
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useInterval(() => {

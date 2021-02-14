@@ -68,11 +68,6 @@ export function getDummyData() {
     },
 
     {
-      inCount: 162,
-      tcpIn: [],
-    },
-
-    {
       channels: {
         data: [0],
       },

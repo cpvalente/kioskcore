@@ -18,18 +18,13 @@ export default function QuadDashboard({ device }) {
     Promise.all([
       fetch(`${url}ajax/get/index/status`).then((response) => response.json()),
 
-      fetch(`${url}ajax/get/playback/playback`).then((response) =>
-        response.json()
-      ),
+      fetch(`${url}ajax/get/playback/playback`).then((response) => response.json()),
 
-      fetch(`${url}ajax/get/monitor/channels/0`).then((response) =>
-        response.json()
-      ),
+      fetch(`${url}ajax/get/monitor/channels/0`).then((response) => response.json()),
 
-      fetch(`${url}ajax/get/monitor/channels/256`).then((response) =>
-        response.json()
-      ),
+      fetch(`${url}ajax/get/monitor/channels/256`).then((response) => response.json())
     ])
+
       .then((data) => {
         if (isMountedRef.current) {
           setData(data);
@@ -71,7 +66,7 @@ export default function QuadDashboard({ device }) {
     return function cleanup() {
       isMountedRef.current = false;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useInterval(() => {
@@ -89,14 +84,14 @@ export default function QuadDashboard({ device }) {
       </div>
     );
 
-  if (error) return <Error />;
+  // if (error) return <Error />;
 
   return (
     <div className='dashboard quad'>
-      <DashboardGeneral   data = {data[0]} />
-      <DashboardInputs    data = {data[0].receiving} />
-      <DashboardPlaybacks data = {data[1].playbacks} />
-      <DashboardMessages  url  = {device.ipaddress} type = {device.type} />
+      <DashboardGeneral data={data[0]} />
+      <DashboardInputs data={data[0].receiving} />
+      <DashboardPlaybacks data={data[1].playbacks} />
+      <DashboardMessages url={device.ipaddress} type={device.type} />
       <DashboardHeatmap
         data={[...data[2].channels.data, ...data[3].channels.data]}
       />

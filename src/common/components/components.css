@@ -42,7 +42,7 @@ table {
   table-layout: auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 12px;
-  overflow-y: auto;
+  overflow: auto;
 }
 
 th {
@@ -60,7 +60,7 @@ td {
 
 td {
   letter-spacing: 0.5px;
-  line-height: 15px;
+  line-height: 13px;
 }
 
 .field {

@@ -77,7 +77,7 @@ export default function IODashboard({ device }) {
       </div>
     );
 
-  if (error) return <Error />;
+  // if (error) return <Error />;
 
   return (
     <div className='dashboard io'>

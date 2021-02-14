@@ -89,7 +89,7 @@ export default function CueDashboard({ device }) {
       </div>
     );
 
-  if (error) return <Error />;
+  // if (error) return <Error />;
 
   return (
     <div className='dashboard cue'>

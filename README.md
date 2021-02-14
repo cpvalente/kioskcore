@@ -1,3 +1,19 @@
+Kioskcore
+==========
+Project to create a simple dashboard for read only operations of Visual Productions devices.
+It utilises the AJAX API to get the status of the devices.
+
+SPEC
+-----
+- Built for lowres touchscreens
+- To run in kiosk mode on a raspberryPI
+- Cover used devices (cuecore, quadcore, iocore)
+
+TODO
+-----
+To implement
+[-] Heatmap shows readout of all universes
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

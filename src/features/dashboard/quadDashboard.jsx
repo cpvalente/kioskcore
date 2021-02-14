@@ -22,10 +22,6 @@ export default function QuadDashboard({ device }) {
         response.json()
       ),
 
-      fetch(`${url}ajax/get/monitor/tcp/in`).then((response) =>
-        response.json()
-      ),
-
       fetch(`${url}ajax/get/monitor/channels/0`).then((response) =>
         response.json()
       ),
@@ -48,6 +44,26 @@ export default function QuadDashboard({ device }) {
       });
   }
 
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+  }
+
   useEffect(() => {
     isMountedRef.current = true;
     getQuadcoreData();
@@ -55,7 +71,11 @@ export default function QuadDashboard({ device }) {
     return function cleanup() {
       isMountedRef.current = false;
     };
-  });
+  }, []);
+
+  useInterval(() => {
+    if (isMountedRef.current) getQuadcoreData();
+  }, 1500);
 
   if (loading && !error)
     return (
@@ -72,12 +92,12 @@ export default function QuadDashboard({ device }) {
 
   return (
     <div className='dashboard quad'>
-      <DashboardGeneral data={data[0]} />
-      <DashboardInputs data={data[0].receiving} />
-      <DashboardPlaybacks data={data[1].playbacks} />
-      <DashboardMessages data={data[2]} />
+      <DashboardGeneral   data = {data[0]} />
+      <DashboardInputs    data = {data[0].receiving} />
+      <DashboardPlaybacks data = {data[1].playbacks} />
+      <DashboardMessages  url  = {device.ipaddress} type = {device.type} />
       <DashboardHeatmap
-        data={[...data[3].channels.data, ...data[4].channels.data]}
+        data={[...data[2].channels.data, ...data[3].channels.data]}
       />
     </div>
   );

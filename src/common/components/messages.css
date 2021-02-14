@@ -1,0 +1,31 @@
+.selectors {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  text-align: center;
+
+  font-size: 14px;
+
+  padding: 0 0px;
+  border-radius: 0.2em;
+  color: #53a6fa99;
+}
+
+.selector.active {
+  background-color: #007ae1aa;
+  color: #fffffa;
+}
+
+.selector {
+  margin-left: 4px;
+  border-radius: 2px;
+  padding: 8px 16px;
+  background-color: #45506055;
+  display: inline-grid;
+  grid-gap: 4px;
+}
+
+.cardTitle {
+  padding: 4px;
+}

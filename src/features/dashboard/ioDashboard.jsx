@@ -17,10 +17,6 @@ export default function IODashboard({ device }) {
     const url = device.ipaddress;
     Promise.all([
       fetch(`${url}ajax/get/index/status`).then((response) => response.json()),
-
-      fetch(`${url}ajax/get/monitor/tcp/in`).then((response) =>
-        response.json()
-      ),
     ])
       .then((data) => {
         if (isMountedRef.current) {
@@ -36,6 +32,26 @@ export default function IODashboard({ device }) {
       });
   }
 
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+  }
+
   useEffect(() => {
     isMountedRef.current = true;
     getIOCoreData();
@@ -43,7 +59,11 @@ export default function IODashboard({ device }) {
     return function cleanup() {
       isMountedRef.current = false;
     };
-  });
+  }, []);
+
+  useInterval(() => {
+    if (isMountedRef.current) getIOCoreData();
+  }, 1500);
 
   if (loading && !error)
     return (
@@ -60,11 +80,11 @@ export default function IODashboard({ device }) {
 
   return (
     <div className='dashboard io'>
-      <DashboardGeneral data={data[0]} />
-      <DashboardInputs data={data[0].receiving} />
-      <DashboardMessages data={data[1]} />
-      <DashboardGPI data={data[0].gpi} />
-      <DashboardGPO data={data[0].gpo} />
+      <DashboardGeneral  data = {data[0]} />
+      <DashboardInputs   data = {data[0].receiving} />
+      <DashboardGPI      data = {data[0].gpi} />
+      <DashboardGPO      data = {data[0].gpo} />
+      <DashboardMessages url  = {device.ipaddress} type = {device.type} />
     </div>
   );
 }

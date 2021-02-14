@@ -33,9 +33,10 @@
 
 table {
   width: 100%;
-
+  table-layout: auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 12px;
+  overflow-y: auto;
 }
 
 th {
@@ -59,6 +60,10 @@ td {
 .field {
   color: #4b7eb1;
   padding-right: 4px;
+}
+
+th:nth-child(1) {
+  width: 1em;
 }
 
 tr:nth-child(odd) {

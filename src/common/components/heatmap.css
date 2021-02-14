@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   overflow-x: hidden;
   padding: 2px;
+  align-content: flex-start;
 }
 
 .node {

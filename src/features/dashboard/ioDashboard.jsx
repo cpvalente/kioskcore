@@ -63,7 +63,7 @@ export default function IODashboard({ device }) {
   }, []);
 
   useInterval(() => {
-    if (isMountedRef.current) getIOCoreData();
+    if (isMountedRef.current && !loading) getIOCoreData();
   }, 1500);
 
   if (loading && !error)

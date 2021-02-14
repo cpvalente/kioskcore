@@ -75,7 +75,7 @@ export default function CueDashboard({ device }) {
   }, []);
 
   useInterval(() => {
-    if (isMountedRef.current) getCuecoreData();
+    if (isMountedRef.current && !loading) getCuecoreData();
   }, 3000);
 
   if (loading && !error)

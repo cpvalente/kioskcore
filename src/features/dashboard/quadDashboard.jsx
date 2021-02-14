@@ -70,7 +70,7 @@ export default function QuadDashboard({ device }) {
   }, []);
 
   useInterval(() => {
-    if (isMountedRef.current) getQuadcoreData();
+    if (isMountedRef.current && !loading) getQuadcoreData();
   }, 1500);
 
   if (loading && !error)

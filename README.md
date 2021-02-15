@@ -12,7 +12,11 @@ SPEC
 TODO
 -----
 To implement
+[-] Last seen
+[x] Heatmap fetches its own data
 [-] Heatmap shows readout of all universes
+[-] Sleeping function on heatmap (stop fetch after 5 min)
+[-] Sleeping function on entire interface
 
 # Getting Started with Create React App
 

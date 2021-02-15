@@ -97,9 +97,7 @@ export default function CueDashboard({ device }) {
       <DashboardInputs    data = {data[0].receiving} />
       <DashboardPlaybacks data = {data[1].playbacks} />
       <DashboardMessages  url  = {device.ipaddress} type = {device.type} />
-      <DashboardHeatmap
-        data={[...data[2].channels.data, ...data[3].channels.data]}
-      />
+      <DashboardHeatmap   url  = {device.ipaddress} />
     </div>
   );
 }

@@ -80,3 +80,20 @@ export function getDummyData() {
     },
   ];
 }
+
+
+export function getDummyDMX() {
+  return [
+    {
+      channels: {
+        data: [0],
+      },
+    },
+
+    {
+      channels: {
+        data: [0],
+      },
+    },
+  ];
+}

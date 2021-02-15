@@ -13,22 +13,31 @@ export default function CueDashboard({ device }) {
   const [error, setError] = useState(false);
   const isMountedRef = useRef(null);
 
+  function status(response) {
+    if (!response.ok) {
+      return Promise.reject();
+    }
+    return response;
+  }
+
   async function getCuecoreData() {
     const url = device.ipaddress;
     Promise.all([
-      fetch(`${url}ajax/get/index/status`).then((response) => response.json()),
+      fetch(`${url}ajax/get/index/status`).then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }),
 
-      fetch(`${url}ajax/get/playback/playback`).then((response) =>
-        response.json()
-      ),
-
-      fetch(`${url}ajax/get/monitor/channels/0`).then((response) =>
-        response.json()
-      ),
-
-      fetch(`${url}ajax/get/monitor/channels/256`).then((response) =>
-        response.json()
-      ),
+      fetch(`${url}ajax/get/playback/playback`).then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }),
     ])
       .then((data) => {
         if (isMountedRef.current) {
@@ -71,7 +80,7 @@ export default function CueDashboard({ device }) {
     return function cleanup() {
       isMountedRef.current = false;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useInterval(() => {
@@ -93,11 +102,11 @@ export default function CueDashboard({ device }) {
 
   return (
     <div className='dashboard cue'>
-      <DashboardGeneral   data = {data[0]} />
-      <DashboardInputs    data = {data[0].receiving} />
-      <DashboardPlaybacks data = {data[1].playbacks} />
-      <DashboardMessages  url  = {device.ipaddress} type = {device.type} />
-      <DashboardHeatmap   url  = {device.ipaddress} />
+      <DashboardGeneral data={data[0]} />
+      <DashboardInputs data={data[0].receiving} />
+      <DashboardPlaybacks data={data[1].playbacks} />
+      <DashboardMessages url={device.ipaddress} type={device.type} />
+      <DashboardHeatmap url={device.ipaddress} />
     </div>
   );
 }

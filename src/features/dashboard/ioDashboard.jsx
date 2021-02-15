@@ -16,7 +16,13 @@ export default function IODashboard({ device }) {
   async function getIOCoreData() {
     const url = device.ipaddress;
     Promise.all([
-      fetch(`${url}ajax/get/index/status`).then((response) => response.json()),
+      fetch(`${url}ajax/get/index/status`).then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }),
     ])
       .then((data) => {
         if (isMountedRef.current) {
@@ -59,7 +65,7 @@ export default function IODashboard({ device }) {
     return function cleanup() {
       isMountedRef.current = false;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useInterval(() => {
@@ -81,11 +87,11 @@ export default function IODashboard({ device }) {
 
   return (
     <div className='dashboard io'>
-      <DashboardGeneral  data = {data[0]} />
-      <DashboardInputs   data = {data[0].receiving} />
-      <DashboardGPI      data = {data[0].gpi} />
-      <DashboardGPO      data = {data[0].gpo} />
-      <DashboardMessages url  = {device.ipaddress} type = {device.type} />
+      <DashboardGeneral data={data[0]} />
+      <DashboardInputs data={data[0].receiving} />
+      <DashboardGPI data={data[0].gpi} />
+      <DashboardGPO data={data[0].gpo} />
+      <DashboardMessages url={device.ipaddress} type={device.type} />
     </div>
   );
 }

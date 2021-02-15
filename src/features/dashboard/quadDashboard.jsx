@@ -16,13 +16,21 @@ export default function QuadDashboard({ device }) {
   async function getQuadcoreData() {
     const url = device.ipaddress;
     Promise.all([
-      fetch(`${url}ajax/get/index/status`).then((response) => response.json()),
+      fetch(`${url}ajax/get/index/status`).then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }),
 
-      fetch(`${url}ajax/get/playback/playback`).then((response) => response.json()),
-
-      fetch(`${url}ajax/get/monitor/channels/0`).then((response) => response.json()),
-
-      fetch(`${url}ajax/get/monitor/channels/256`).then((response) => response.json())
+      fetch(`${url}ajax/get/playback/playback`).then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }),
     ])
 
       .then((data) => {
@@ -92,7 +100,7 @@ export default function QuadDashboard({ device }) {
       <DashboardInputs data={data[0].receiving} />
       <DashboardPlaybacks data={data[1].playbacks} />
       <DashboardMessages url={device.ipaddress} type={device.type} />
-      <DashboardHeatmap  url={device.ipaddress} />
+      <DashboardHeatmap url={device.ipaddress} />
     </div>
   );
 }

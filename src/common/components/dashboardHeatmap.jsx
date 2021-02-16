@@ -4,6 +4,7 @@ import './heatmap.css';
 import Heatmap from '../../features/dashboard/heatmap';
 import { useEffect, useRef, useState } from 'react';
 import { getDummyDMX } from '../../data/dummyData';
+import { checkResponse } from '../../data/utils';
 
 export default function DashboardHeatmap({ url, sleeping }) {
   const [data, setData] = useState(getDummyDMX);
@@ -13,9 +14,8 @@ export default function DashboardHeatmap({ url, sleeping }) {
 
   async function getDMXData() {
     Promise.all([
-      fetch(`${url}ajax/get/monitor/channels/0`).then((response) => response.json()),
-
-      fetch(`${url}ajax/get/monitor/channels/256`).then((response) => response.json())
+      fetch(`${url}ajax/get/monitor/channels/0`).then(checkResponse),
+      fetch(`${url}ajax/get/monitor/channels/256`).then(checkResponse),
     ])
 
       .then((data) => {

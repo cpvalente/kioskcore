@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { checkResponse } from '../../data/utils';
 import './components.css';
 import './messages.css';
 
@@ -37,7 +38,7 @@ export default function DashboardMessages({ url, type, sleeping }) {
         });
     }
 
-    if (select === 'UDP') {
+    else if (select === 'UDP') {
       Promise.all([
         fetch(`${url}ajax/get/monitor/udp/in`).then((response) =>
           response.json()
@@ -61,14 +62,10 @@ export default function DashboardMessages({ url, type, sleeping }) {
         });
     }
 
-    if (select === 'OSC') {
+    else if (select === 'OSC') {
       Promise.all([
-        fetch(`${url}ajax/get/monitor/osc/in`).then((response) =>
-          response.json()
-        ),
-        fetch(`${url}ajax/get/monitor/osc/out`).then((response) =>
-          response.json()
-        ),
+        fetch(`${url}ajax/get/monitor/osc/in`).then(checkResponse),
+        fetch(`${url}ajax/get/monitor/osc/out`).then(checkResponse),
       ])
         .then((data) => {
           if (isMountedRef.current) {
@@ -85,14 +82,23 @@ export default function DashboardMessages({ url, type, sleeping }) {
         });
     }
 
-    if (type === 'IOCore' && select === 'RS232') {
+    else if (type === 'IOCore' && select === 'RS232') {
       Promise.all([
-        fetch(`${url}ajax/get/monitor/rs232/in`).then((response) =>
-          response.json()
-        ),
-        fetch(`${url}ajax/get/monitor/rs232/out`).then((response) =>
-          response.json()
-        ),
+        fetch(`${url}ajax/get/monitor/rs232/in`).then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Something went wrong');
+          }
+        }),
+
+        fetch(`${url}ajax/get/monitor/rs232/out`).then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }),
       ])
         .then((data) => {
           if (isMountedRef.current) {

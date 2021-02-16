@@ -6,6 +6,7 @@ import DashboardMessages from '../../common/components/dashboardMessages';
 import DashboardPlaybacks from '../../common/components/dashboardPlaybacks';
 import Error from '../../common/components/error';
 import { getDummyData } from '../../data/dummyData';
+import { checkResponse } from '../../data/utils';
 
 export default function QuadDashboard({ device, sleeping }) {
   const [data, setData] = useState(getDummyData);
@@ -13,24 +14,12 @@ export default function QuadDashboard({ device, sleeping }) {
   const [error, setError] = useState(false);
   const isMountedRef = useRef(null);
 
+
   async function getQuadcoreData() {
     const url = device.ipaddress;
     Promise.all([
-      fetch(`${url}ajax/get/index/status`).then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }),
-
-      fetch(`${url}ajax/get/playback/playback`).then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }),
+      fetch(`${url}ajax/get/index/status`).then(checkResponse),
+      fetch(`${url}ajax/get/playback/playback`).then(checkResponse),
     ])
 
       .then((data) => {

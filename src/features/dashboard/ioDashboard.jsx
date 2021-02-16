@@ -6,6 +6,7 @@ import DashboardInputs from '../../common/components/dashboardInputs';
 import DashboardMessages from '../../common/components/dashboardMessages';
 import Error from '../../common/components/error';
 import { getDummyData } from '../../data/dummyData';
+import { checkResponse } from '../../data/utils';
 
 export default function IODashboard({ device, sleeping }) {
   const [data, setData] = useState(getDummyData);
@@ -17,13 +18,7 @@ export default function IODashboard({ device, sleeping }) {
   async function getIOCoreData() {
     const url = device.ipaddress;
     Promise.all([
-      fetch(`${url}ajax/get/index/status`).then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }),
+      fetch(`${url}ajax/get/index/status`).then(checkResponse)
     ])
       .then((data) => {
         if (isMountedRef.current) {

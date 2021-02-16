@@ -7,7 +7,7 @@ import DashboardPlaybacks from '../../common/components/dashboardPlaybacks';
 import Error from '../../common/components/error';
 import { getDummyData } from '../../data/dummyData';
 
-export default function QuadDashboard({ device }) {
+export default function QuadDashboard({ device, sleeping }) {
   const [data, setData] = useState(getDummyData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -44,6 +44,7 @@ export default function QuadDashboard({ device }) {
           setError(true);
           console.log(err.message);
         }
+        setLoading(false);
       });
   }
 
@@ -78,7 +79,9 @@ export default function QuadDashboard({ device }) {
   }, []);
 
   useInterval(() => {
-    if (isMountedRef.current && !loading) getQuadcoreData();
+    if (isMountedRef.current && !loading && !sleeping) {
+      getQuadcoreData();
+    }
   }, 1500);
 
   if (loading && !error)
@@ -99,8 +102,8 @@ export default function QuadDashboard({ device }) {
       <DashboardGeneral data={data[0]} />
       <DashboardInputs data={data[0].receiving} />
       <DashboardPlaybacks data={data[1].playbacks} />
-      <DashboardMessages url={device.ipaddress} type={device.type} />
-      <DashboardHeatmap url={device.ipaddress} />
+      <DashboardMessages url={device.ipaddress} type={device.type} sleeping={sleeping} />
+      <DashboardHeatmap url={device.ipaddress} sleeping={sleeping} />
     </div>
   );
 }

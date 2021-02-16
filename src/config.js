@@ -3,6 +3,9 @@
 // device.id     must exist and be unique
 // device.short  populates UI
 
+// stop querying after
+export const SLEEP_TIME=5000;
+
 export const config = {
   projectTitle: 'Kringjså Skole',
   revisionDate: '12.02.2021',

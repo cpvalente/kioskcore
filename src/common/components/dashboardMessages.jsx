@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import './components.css';
 import './messages.css';
 
-export default function DashboardMessages({ url, type }) {
+export default function DashboardMessages({ url, type, sleeping }) {
   // TODO: Find a better solution for generating ids
 
   const [dataIn, setDataIn] = useState([]);
@@ -106,6 +106,7 @@ export default function DashboardMessages({ url, type }) {
             setError(true);
             console.log(err.message);
           }
+          setLoading(false);
         });
     }
   }
@@ -141,10 +142,8 @@ export default function DashboardMessages({ url, type }) {
   }, [select]);
 
   useInterval(() => {
-    if (isMountedRef.current) {
-      setLoading(true);
+    if (isMountedRef.current && !loading && !sleeping) {
       getNetworkData();
-      setLoading(false);
     }
   }, 3000);
 

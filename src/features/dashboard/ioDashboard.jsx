@@ -7,11 +7,12 @@ import DashboardMessages from '../../common/components/dashboardMessages';
 import Error from '../../common/components/error';
 import { getDummyData } from '../../data/dummyData';
 
-export default function IODashboard({ device }) {
+export default function IODashboard({ device, sleeping }) {
   const [data, setData] = useState(getDummyData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const isMountedRef = useRef(null);
+
 
   async function getIOCoreData() {
     const url = device.ipaddress;
@@ -35,6 +36,7 @@ export default function IODashboard({ device }) {
           setError(true);
           console.log(err.message);
         }
+        setLoading(false);
       });
   }
 
@@ -69,8 +71,11 @@ export default function IODashboard({ device }) {
   }, []);
 
   useInterval(() => {
-    if (isMountedRef.current && !loading) getIOCoreData();
+    if (isMountedRef.current && !loading && !sleeping) {
+      getIOCoreData();
+    }
   }, 1500);
+
 
   if (loading && !error)
     return (
@@ -91,7 +96,7 @@ export default function IODashboard({ device }) {
       <DashboardInputs data={data[0].receiving} />
       <DashboardGPI data={data[0].gpi} />
       <DashboardGPO data={data[0].gpo} />
-      <DashboardMessages url={device.ipaddress} type={device.type} />
+      <DashboardMessages url={device.ipaddress} type={device.type} sleeping={sleeping} />
     </div>
   );
 }

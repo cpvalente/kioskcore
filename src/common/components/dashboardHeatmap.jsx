@@ -5,7 +5,7 @@ import Heatmap from '../../features/dashboard/heatmap';
 import { useEffect, useRef, useState } from 'react';
 import { getDummyDMX } from '../../data/dummyData';
 
-export default function DashboardHeatmap({ url }) {
+export default function DashboardHeatmap({ url, sleeping }) {
   const [data, setData] = useState(getDummyDMX);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -29,6 +29,7 @@ export default function DashboardHeatmap({ url }) {
           setError(true);
           console.log(err.message);
         }
+        setLoading(false);
       });
   }
 
@@ -63,7 +64,9 @@ export default function DashboardHeatmap({ url }) {
   }, []);
 
   useInterval(() => {
-    if (isMountedRef.current && !loading) getDMXData();
+    if (isMountedRef.current && !loading && !sleeping) {
+      getDMXData();
+    }
   }, 1500);
 
   return (

@@ -7,18 +7,11 @@ import DashboardPlaybacks from '../../common/components/dashboardPlaybacks';
 import Error from '../../common/components/error';
 import { getDummyData } from '../../data/dummyData';
 
-export default function CueDashboard({ device }) {
+export default function CueDashboard({ device, sleeping }) {
   const [data, setData] = useState(getDummyData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const isMountedRef = useRef(null);
-
-  function status(response) {
-    if (!response.ok) {
-      return Promise.reject();
-    }
-    return response;
-  }
 
   async function getCuecoreData() {
     const url = device.ipaddress;
@@ -50,6 +43,7 @@ export default function CueDashboard({ device }) {
           setError(true);
           console.log(err.message);
         }
+        setLoading(false);
       });
   }
 
@@ -84,8 +78,9 @@ export default function CueDashboard({ device }) {
   }, []);
 
   useInterval(() => {
-    if (isMountedRef.current && !loading) getCuecoreData();
-  }, 3000);
+    if (isMountedRef.current && !loading && !sleeping) {
+      getCuecoreData();
+    }  }, 3000);
 
   if (loading && !error)
     return (
@@ -105,8 +100,8 @@ export default function CueDashboard({ device }) {
       <DashboardGeneral data={data[0]} />
       <DashboardInputs data={data[0].receiving} />
       <DashboardPlaybacks data={data[1].playbacks} />
-      <DashboardMessages url={device.ipaddress} type={device.type} />
-      <DashboardHeatmap url={device.ipaddress} />
+      <DashboardMessages url={device.ipaddress} type={device.type} sleeping={sleeping} />
+      <DashboardHeatmap url={device.ipaddress} sleeping={sleeping} />
     </div>
   );
 }

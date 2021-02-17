@@ -1,4 +1,5 @@
 import './components.css';
+import Indicator from './indicator';
 import './indicator.css';
 
 export default function DashboardGPO({ data }) {
@@ -19,7 +20,7 @@ export default function DashboardGPO({ data }) {
     if (d.includes('Value')) {
       gpo[index].gpoValue = data[d];
     } else {
-      if (data[d] === '') gpo[index].gpoName = `GPO ${index}`;
+      if (data[d] === '') gpo[index].gpoName = `GPO ${index+1}`;
       else gpo[index].gpoName = data[d];
     }
   }
@@ -29,14 +30,12 @@ export default function DashboardGPO({ data }) {
       <h3 className='cardTitle'>GPO</h3>
       <div className='cardContent indicatorlist'>
         {gpo.map((g, index) => (
-          <div
-            className={g.gpoValue === 1 ? 'indicator active' : 'indicator'}
-            key={index}
-          >
-            <span>
-              {g.gpoName} / {g.gpoValue}
-            </span>
-          </div>
+          <Indicator
+          active={(g.gpoValue !== 'Off') && (g.gpoValue !== '0%') && (g.gpoValue !== 0)}
+          main={g.gpoValue}
+          secondary={g.gpoName}
+          key={index}
+        />
         ))}
       </div>
     </div>

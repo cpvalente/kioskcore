@@ -52,7 +52,7 @@ export default function DashboardInputs({ data }) {
             className={value === 'yes' ? 'indicator active' : 'indicator'}
             key={key}
           >
-            <span>{key}</span>
+            <span className='indicator-single'>{key}</span>
           </div>
         ))}
       </div>

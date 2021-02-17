@@ -1,4 +1,5 @@
 import './components.css';
+import Indicator from './indicator';
 import './indicator.css';
 
 export default function DashboardGPI({ data }) {
@@ -24,7 +25,7 @@ export default function DashboardGPI({ data }) {
         gpi[index].gpiValue = val;
       }
     } else {
-      if (val === '') gpi[index].gpiName = `GPI ${index}`;
+      if (val === '') gpi[index].gpiName = `GPI ${index+1}`;
       else gpi[index].gpiName = val;
     }
   }
@@ -34,14 +35,12 @@ export default function DashboardGPI({ data }) {
       <h3 className='cardTitle'>GPI</h3>
       <div className='cardContent indicatorlist'>
         {gpi.map((g, index) => (
-          <div
-            className={g.gpiValue === 'Off' ? 'indicator' : 'indicator active'}
+          <Indicator
+            active={g.gpiValue !== 'Off' && g.gpiValue !== '0%'}
+            main={g.gpiValue}
+            secondary={g.gpiName}
             key={index}
-          >
-            <span>
-              {g.gpiName} / {g.gpiValue}
-            </span>
-          </div>
+          />
         ))}
       </div>
     </div>

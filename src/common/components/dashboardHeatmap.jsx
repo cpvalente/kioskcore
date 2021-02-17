@@ -10,6 +10,7 @@ export default function DashboardHeatmap({ url, sleeping }) {
   const [data, setData] = useState(getDummyDMX);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [select, setSelect] = useState('DMX A');
   const isMountedRef = useRef(null);
 
   async function getDMXData() {
@@ -71,8 +72,18 @@ export default function DashboardHeatmap({ url, sleeping }) {
 
   return (
     <div className='card card-heatmap'>
-      <h3 className='cardTitle'>DMX Output A</h3>
-      <Heatmap heatmapData={[...data[0].channels.data, ...data[1].channels.data]} />
+      <h3 className='cardTitle'>DMX Output</h3>
+      <div className='cardContent'>
+        <div className='selectors'>
+          <div className='selector active'>DMX A</div>
+          <div className='selector'>DMX B</div>
+          <div className='selector'>DMX C</div>
+          <div className='selector'>DMX D</div>
+        </div>
+        <Heatmap
+          heatmapData={[...data[0].channels.data, ...data[1].channels.data]}
+        />
+      </div>
     </div>
   );
 }

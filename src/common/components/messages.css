@@ -20,7 +20,8 @@
 .selector {
   margin-left: 4px;
   border-radius: 2px;
-  padding: 8px 16px;
+  border: #007ae155 1px solid;
+  padding: 6px 16px;
   background-color: #45506055;
   display: inline-grid;
   grid-gap: 4px;

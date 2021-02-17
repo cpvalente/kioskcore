@@ -5,7 +5,7 @@
   align-items: center;
   text-align: center;
 
-  font-size: 14px;
+  font-size: 12px;
 
   padding: 0 4px;
   background-color: #45506055;
@@ -14,9 +14,26 @@
 }
 
 .indicator.active {
-  background-color: #26daad;
+  background-color: #20b48f;
   color: #fffffa;
 }
+
+.indicator-single {
+  font-size: 16px;
+  color: #53a6fa99;
+  ;
+}
+
+.indicator-main {
+  font-size: 18px;
+  padding-top: 4px;
+}
+
+.indicator-secondary {
+  font-size: 12px;
+  color: #fffffabb;
+}
+
 
 .indicatorlist {
   display: inline-grid;

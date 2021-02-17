@@ -24,7 +24,7 @@
 .quad >
 .dashboardGeneralSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
-  grid-area: 1 / 1 / 5 / 6;
+  grid-area: 1 / 1 / 4 / 6;
 }
 
 .quad >
@@ -40,7 +40,7 @@
 .quad >
 .dashboardPlaybacksSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
-  grid-area: 5 / 1 / 7 / 6;
+  grid-area: 4 / 1 / 7 / 6;
 }
 
 .quad >

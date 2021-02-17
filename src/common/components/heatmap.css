@@ -2,13 +2,13 @@
   display: flex;
   flex-wrap: wrap;
   overflow-x: hidden;
-  padding: 2px;
+  padding: 4px;
   align-content: flex-start;
 }
 
 .node {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   box-sizing: border-box;
   border: 1px solid #45506022;
 }

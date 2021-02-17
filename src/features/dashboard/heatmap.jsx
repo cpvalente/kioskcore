@@ -8,7 +8,7 @@ export default function Heatmap({ heatmapData }) {
             className='node'
             key={index}
             style={{ backgroundColor: `rgba(38, 218, 173, ${val})` }}
-          ></div>
+          />
         );
       })}
     </div>

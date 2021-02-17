@@ -10,7 +10,7 @@ export default function DashboardHeatmap({ url, sleeping }) {
   const [data, setData] = useState(getDummyDMX);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [select, setSelect] = useState('DMX A');
+  const [select, setSelect] = useState(0);
   const isMountedRef = useRef(null);
 
   async function getDMXData() {
@@ -70,15 +70,41 @@ export default function DashboardHeatmap({ url, sleeping }) {
     }
   }, 1500);
 
+  const handleSelect = async (univSelect) => {
+    // ask controller tochange universe
+    let response = await fetch(`${url}ajax/set/monitor/universe/${univSelect}`);
+
+    if (response.ok) {
+      // set select
+      setSelect(univSelect);
+    }
+  }
+
   return (
     <div className='card card-heatmap'>
       <h3 className='cardTitle'>DMX Output</h3>
       <div className='cardContent'>
         <div className='selectors'>
-          <div className='selector active'>DMX A</div>
-          <div className='selector'>DMX B</div>
-          <div className='selector'>DMX C</div>
-          <div className='selector'>DMX D</div>
+          <div
+            className={select === 0 ? 'selector active' : 'selector'}
+            onClick={() => handleSelect(0)}>
+            DMX A
+          </div>
+          <div
+            className={select === 1 ? 'selector active' : 'selector'}
+            onClick={() => handleSelect(1)}>
+            DMX B
+          </div>
+          <div
+            className={select === 2 ? 'selector active' : 'selector'}
+            onClick={() => handleSelect(2)}>
+            DMX C
+          </div>
+          <div
+            className={select === 3 ? 'selector active' : 'selector'}
+            onClick={() => handleSelect(3)}>
+            DMX D
+          </div>
         </div>
         <Heatmap
           heatmapData={[...data[0].channels.data, ...data[1].channels.data]}

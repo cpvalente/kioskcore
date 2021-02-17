@@ -28,7 +28,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className='App darkGradient' onClick={handleClick}>
+      <div className={sleeping ? 'App darkGradient sleeping' : 'App darkGradient'} onClick={handleClick}>
         <Navbar devices={config.devices} />
         <Switch>
           <Route exact path='/'>

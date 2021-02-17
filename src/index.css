@@ -26,6 +26,11 @@ p {
   display: grid;
   grid-template-columns: 4em 1fr;
   grid-template-areas: 'navbar main';
+  transition: filter 0.2s;
+}
+
+.App.sleeping {
+  filter: grayscale(66%);
 }
 
 .darkGradient {

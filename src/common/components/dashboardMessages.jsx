@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { checkResponse } from '../../data/utils';
+import { fetchNetworkData } from '../../data/fetchAPI';
 import './components.css';
 import './messages.css';
 
-export default function DashboardMessages({ url, type, sleeping }) {
-  // TODO: Find a better solution for generating ids
+export default function DashboardMessages({ ipaddress, type, sleeping }) {
 
   const [dataIn, setDataIn] = useState([]);
   const [dataOut, setDataOut] = useState([]);
@@ -14,106 +13,73 @@ export default function DashboardMessages({ url, type, sleeping }) {
   const isMountedRef = useRef(null);
 
   async function getNetworkData() {
+
     if (select === 'TCP') {
-      Promise.all([
-        fetch(`${url}ajax/get/monitor/tcp/in`).then((response) =>
-          response.json()
-        ),
-        fetch(`${url}ajax/get/monitor/tcp/out`).then((response) =>
-          response.json()
-        ),
-      ])
-        .then((data) => {
-          if (isMountedRef.current) {
-            setDataIn(data[0].tcpIn);
-            setDataOut(data[1].tcpOut);
-            setLoading(false);
-          }
-        })
-        .catch(function (err) {
-          if (isMountedRef.current) {
-            setError(true);
-            console.log(err.message);
-          }
-        });
+      fetchNetworkData(ipaddress, 'tcp')
+      .then((data) => {
+        if (isMountedRef.current) {
+          setDataIn(data[0].tcpIn);
+          setDataOut(data[1].tcpOut);
+        }
+      })
+      .catch(function (err) {
+        if (isMountedRef.current) {
+          setError(true);
+          console.log(err.message);
+        }
+      });
+      setLoading(false);
     }
 
     else if (select === 'UDP') {
-      Promise.all([
-        fetch(`${url}ajax/get/monitor/udp/in`).then((response) =>
-          response.json()
-        ),
-        fetch(`${url}ajax/get/monitor/udp/out`).then((response) =>
-          response.json()
-        ),
-      ])
-        .then((data) => {
-          if (isMountedRef.current) {
-            setDataIn(data[0].udpIn);
-            setDataOut(data[1].udpOut);
-            setLoading(false);
-          }
-        })
-        .catch(function (err) {
-          if (isMountedRef.current) {
-            setError(true);
-            console.log(err.message);
-          }
-        });
+      fetchNetworkData(ipaddress, 'udp')
+      .then((data) => {
+        if (isMountedRef.current) {
+          setDataIn(data[0].udpIn);
+          setDataOut(data[1].udpOut);
+        }
+      })
+      .catch(function (err) {
+        if (isMountedRef.current) {
+          setError(true);
+          console.log(err.message);
+        }
+      });
+      setLoading(false);
     }
 
     else if (select === 'OSC') {
-      Promise.all([
-        fetch(`${url}ajax/get/monitor/osc/in`).then(checkResponse),
-        fetch(`${url}ajax/get/monitor/osc/out`).then(checkResponse),
-      ])
-        .then((data) => {
-          if (isMountedRef.current) {
-            setDataIn(data[0].oscIn);
-            setDataOut(data[1].oscOut);
-            setLoading(false);
-          }
-        })
-        .catch(function (err) {
-          if (isMountedRef.current) {
-            setError(true);
-            console.log(err.message);
-          }
-        });
+      fetchNetworkData(ipaddress, 'osc')
+      .then((data) => {
+        if (isMountedRef.current) {
+          setDataIn(data[0].oscIn);
+          setDataOut(data[1].oscOut);
+        }
+      })
+      .catch(function (err) {
+        if (isMountedRef.current) {
+          setError(true);
+          console.log(err.message);
+        }
+      });
+      setLoading(false);
     }
 
     else if (type === 'IOCore' && select === 'RS232') {
-      Promise.all([
-        fetch(`${url}ajax/get/monitor/rs232/in`).then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error('Something went wrong');
-          }
-        }),
-
-        fetch(`${url}ajax/get/monitor/rs232/out`).then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Something went wrong');
+      fetchNetworkData(ipaddress, 'rs232')
+      .then((data) => {
+        if (isMountedRef.current) {
+          setDataIn(data[0].rs232In);
+          setDataOut(data[1].rs232Out);
         }
-      }),
-      ])
-        .then((data) => {
-          if (isMountedRef.current) {
-            setDataIn(data[0].rs232In);
-            setDataOut(data[1].rs232Out);
-            setLoading(false);
-          }
-        })
-        .catch(function (err) {
-          if (isMountedRef.current) {
-            setError(true);
-            console.log(err.message);
-          }
-          setLoading(false);
-        });
+      })
+      .catch(function (err) {
+        if (isMountedRef.current) {
+          setError(true);
+          console.log(err.message);
+        }
+      });
+      setLoading(false);
     }
   }
 

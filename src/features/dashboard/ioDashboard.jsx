@@ -33,7 +33,6 @@ export default function IODashboard( props ) {
       deviceData = dd;
     }
   }
-  console.log('io dash', deviceData)
 
   if (deviceData === undefined)
     return (
@@ -62,7 +61,11 @@ export default function IODashboard( props ) {
       <DashboardInputs data={deviceData.receiving} />
       <DashboardGPI data={deviceData.gpi} />
       <DashboardGPO data={deviceData.gpo} />
-      <DashboardMessages url={props.deviceConfig.ipaddress} type={props.deviceConfig.type} sleeping={props.sleeping} />
+      <DashboardMessages
+        ipaddress={props.deviceConfig.ipaddress}
+        type={props.deviceConfig.type}
+        sleeping={props.sleeping}
+      />
     </div>
   );
 }

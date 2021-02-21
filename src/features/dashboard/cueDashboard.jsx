@@ -6,7 +6,7 @@ import DashboardMessages from '../../common/components/dashboardMessages';
 import DashboardPlaybacks from '../../common/components/dashboardPlaybacks';
 import Error from '../../common/components/error';
 import { getDummyData } from '../../data/dummyData';
-import { checkResponse } from '../../data/utils';
+import { fetchPlaybackData } from '../../data/fetchAPI';
 
 export default function CueDashboard( props ) {
   const [data, setData] = useState(getDummyData);
@@ -35,30 +35,19 @@ export default function CueDashboard( props ) {
   if (props.genData) {
     let dd = props.genData.find((d) => d.id == props.deviceConfig.id);
     if (dd) {
-
       deviceData = dd;
     }
   }
 
   async function getCuecoreData() {
-    const url = props.deviceConfig.ipaddress;
-    Promise.all([
-      fetch(`${url}ajax/get/playback/playback`).then(checkResponse),
-    ])
-      .then((data) => {
-        if (isMountedRef.current) {
-          setData(data);
-          setLoading(false);
-        }
-      })
-      .catch(function (err) {
-        if (isMountedRef.current) {
-          setError(true);
-          console.log(err.message);
-        }
-        setLoading(false);
-      });
+    const d = await fetchPlaybackData(deviceData.ipaddress);
+    // keep getting an object here (the promise)
+    if (isMountedRef.current) {
+      setData(d);
+    }
+    setLoading(false);
   }
+
 
   function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -122,7 +111,7 @@ export default function CueDashboard( props ) {
       <DashboardInputs data={deviceData.receiving} />
       <DashboardPlaybacks data={data[0].playbacks} />
       <DashboardMessages
-        url={props.deviceConfig.ipaddress}
+        ipaddress={props.deviceConfig.ipaddress}
         type={props.deviceConfig.type}
         sleeping={props.sleeping}
       />

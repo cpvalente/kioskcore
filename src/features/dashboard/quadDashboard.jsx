@@ -123,7 +123,7 @@ export default function QuadDashboard( props ) {
       <DashboardInputs data={deviceData.receiving} />
       <DashboardPlaybacks data={data[0].playbacks} />
       <DashboardMessages
-        url={props.deviceConfig.ipaddress}
+        ipaddress={props.deviceConfig.ipaddress}
         type={props.deviceConfig.type}
         sleeping={props.sleeping}
       />

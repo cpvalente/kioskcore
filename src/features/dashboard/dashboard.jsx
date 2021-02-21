@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Error from '../../common/components/error';
 import { config } from '../../config';
@@ -33,6 +32,6 @@ export default function Dashboard({ sleeping, genData }) {
       sleeping={sleeping}
       genData={genData}
     />;
-    
+
   } else return <Error />;
 }

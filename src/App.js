@@ -2,30 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
 import { config, SLEEP_TIME } from './config';
-import { checkResponse } from './data/utils';
 import Dashboard from './features/dashboard/dashboard';
 
 import Navbar from './features/navbar/navbar';
 import Settings from './features/settings/settings';
 
 import { getDummyData } from './data/dummyData';
-
-async function fetchGeneralData() {
-  let arr = [];
-  await Promise.all(
-    config.devices.map(d =>
-      fetch(`${d.ipaddress}ajax/get/index/status`)
-      .then(response => checkResponse(response))
-      .then(json => {
-        // inject ID
-        json.id = d.id;
-        // inject timestamp
-        json.lastSeen = new Date();
-        arr.push(json)
-      })
-    ))
-  return(arr);
-}
+import { fetchGeneralData } from './data/fetchAPI';
 
 function App() {
   const defaultRoute = '/device/1';
@@ -51,7 +34,7 @@ function App() {
   }
 
   async function getGeneralData() {
-    const d = await fetchGeneralData();
+    const d = await fetchGeneralData(config.devices);
     // keep getting an object here (the promise)
     setGenData(await d);
   }

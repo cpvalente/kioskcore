@@ -1,18 +1,18 @@
-export function getDummyData() {
+export function getDummyGeneralData() {
   return [
     {
       gen: {
-        serial: 'MyCueCore',
-        upt: '7d 4h 26m',
+        serial: 'Retrieving data....',
+        upt: 'Retrieving data....',
         lbl: 'Retrieving data....',
       },
       ip: {
-        ip: '192.168.1.14',
-        sn: '255.255.255.0',
+        ip: 'Retrieving data....',
+        sn: 'Retrieving data....',
       },
       time: {
-        d: '2020-01-13',
-        t: '23:51:29',
+        d: 'Retrieving data....',
+        t: 'Retrieving data....',
       },
       receiving: {
         d1: '-',
@@ -25,7 +25,11 @@ export function getDummyData() {
         OSC: 'no',
       },
     },
+  ]
+}
 
+export function getDummyData() {
+  return [
     {
       playbacks: [
         {

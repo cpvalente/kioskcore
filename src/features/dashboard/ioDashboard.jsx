@@ -1,78 +1,41 @@
-import { useEffect, useRef, useState } from 'react';
 import DashboardGeneral from '../../common/components/dashboardGeneral';
 import DashboardGPI from '../../common/components/dashboardGPI';
 import DashboardGPO from '../../common/components/dashboardGPO';
 import DashboardInputs from '../../common/components/dashboardInputs';
 import DashboardMessages from '../../common/components/dashboardMessages';
 import Error from '../../common/components/error';
-import { getDummyData } from '../../data/dummyData';
-import { checkResponse } from '../../data/utils';
 
-export default function IODashboard({ device, sleeping }) {
-  const [data, setData] = useState(getDummyData);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const isMountedRef = useRef(null);
+export default function IODashboard( props ) {
 
+  let deviceData = {
+    lastSeen : 'Retrieving data....',
+    gen: {
+      serial: 'Retrieving data....',
+      upt: 'Retrieving data....',
+      lbl: 'Retrieving data....',
+    },
+    ip: {
+      ip: 'Retrieving data....',
+      sn: 'Retrieving data....',
+    },
+    time: {
+      d: 'Retrieving data....',
+      t: 'Retrieving data....',
+    },
+    receiving: {},
+    gpi: {},
+    gpo: {}
+  };
 
-  async function getIOCoreData() {
-    const url = device.ipaddress;
-    Promise.all([
-      fetch(`${url}ajax/get/index/status`).then(checkResponse)
-    ])
-      .then((data) => {
-        if (isMountedRef.current) {
-          setData(data);
-          setLoading(false);
-        }
-      })
-      .catch(function (err) {
-        if (isMountedRef.current) {
-          setError(true);
-          console.log(err.message);
-        }
-        setLoading(false);
-      });
-  }
-
-  function useInterval(callback, delay) {
-    const savedCallback = useRef();
-
-    // Remember the latest callback.
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    // Set up the interval.
-    useEffect(() => {
-      function tick() {
-        savedCallback.current();
-      }
-      if (delay !== null) {
-        let id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  }
-
-  useEffect(() => {
-    isMountedRef.current = true;
-    getIOCoreData();
-
-    return function cleanup() {
-      isMountedRef.current = false;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useInterval(() => {
-    if (isMountedRef.current && !loading && !sleeping) {
-      getIOCoreData();
+  if (props.genData) {
+    let dd = props.genData.find((d) => d.id == props.deviceConfig.id);
+    if (dd) {
+      deviceData = dd;
     }
-  }, 1500);
+  }
+  console.log('io dash', deviceData)
 
-
-  if (loading && !error)
+  if (deviceData === undefined)
     return (
       <div className='loadingSkeleton io'>
         <div className='card dashboardGeneralSkeleton' />
@@ -87,11 +50,19 @@ export default function IODashboard({ device, sleeping }) {
 
   return (
     <div className='dashboard io'>
-      <DashboardGeneral data={data[0]} />
-      <DashboardInputs data={data[0].receiving} />
-      <DashboardGPI data={data[0].gpi} />
-      <DashboardGPO data={data[0].gpo} />
-      <DashboardMessages url={device.ipaddress} type={device.type} sleeping={sleeping} />
+      <DashboardGeneral
+        label = {deviceData.gen.lbl}
+        lastSeen = {deviceData.lastSeen}
+        upt = {deviceData.gen.upt}
+        date = {deviceData.gen.d}
+        time = {deviceData.gen.t}
+        ip = {deviceData.ip.ip}
+        sn = {deviceData.ip.sn}
+      />
+      <DashboardInputs data={deviceData.receiving} />
+      <DashboardGPI data={deviceData.gpi} />
+      <DashboardGPO data={deviceData.gpo} />
+      <DashboardMessages url={props.deviceConfig.ipaddress} type={props.deviceConfig.type} sleeping={props.sleeping} />
     </div>
   );
 }

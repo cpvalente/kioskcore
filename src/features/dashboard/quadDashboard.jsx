@@ -8,20 +8,42 @@ import Error from '../../common/components/error';
 import { getDummyData } from '../../data/dummyData';
 import { checkResponse } from '../../data/utils';
 
-export default function QuadDashboard({ device, sleeping }) {
+export default function QuadDashboard( props ) {
   const [data, setData] = useState(getDummyData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const isMountedRef = useRef(null);
 
+  let deviceData = {
+    lastSeen : 'Retrieving data....',
+    gen: {
+      serial: 'Retrieving data....',
+      upt: 'Retrieving data....',
+      lbl: 'Retrieving data....',
+    },
+    ip: {
+      ip: 'Retrieving data....',
+      sn: 'Retrieving data....',
+    },
+    time: {
+      d: 'Retrieving data....',
+      t: 'Retrieving data....',
+    },
+    receiving: {}
+  };
+
+  if (props.genData) {
+    let dd = props.genData.find((d) => d.id == props.deviceConfig.id);
+    if (dd) {
+      deviceData = dd;
+    }
+  }
 
   async function getQuadcoreData() {
-    const url = device.ipaddress;
+    const url = props.deviceConfig.ipaddress;
     Promise.all([
-      fetch(`${url}ajax/get/index/status`).then(checkResponse),
       fetch(`${url}ajax/get/playback/playback`).then(checkResponse),
     ])
-
       .then((data) => {
         if (isMountedRef.current) {
           setData(data);
@@ -60,6 +82,7 @@ export default function QuadDashboard({ device, sleeping }) {
   useEffect(() => {
     isMountedRef.current = true;
     getQuadcoreData();
+    setLoading(false)
 
     return function cleanup() {
       isMountedRef.current = false;
@@ -68,12 +91,12 @@ export default function QuadDashboard({ device, sleeping }) {
   }, []);
 
   useInterval(() => {
-    if (isMountedRef.current && !loading && !sleeping) {
+    if (isMountedRef.current && !loading && !props.sleeping) {
       getQuadcoreData();
     }
   }, 1500);
 
-  if (loading && !error)
+  if (loading && (deviceData === undefined))
     return (
       <div className='loadingSkeleton quad'>
         <div className='card dashboardGeneralSkeleton' />
@@ -88,11 +111,26 @@ export default function QuadDashboard({ device, sleeping }) {
 
   return (
     <div className='dashboard quad'>
-      <DashboardGeneral data={data[0]} />
-      <DashboardInputs data={data[0].receiving} />
-      <DashboardPlaybacks data={data[1].playbacks} />
-      <DashboardMessages url={device.ipaddress} type={device.type} sleeping={sleeping} />
-      <DashboardHeatmap url={device.ipaddress} sleeping={sleeping} />
+      <DashboardGeneral
+        label = {deviceData.gen.lbl}
+        lastSeen = {deviceData.lastSeen}
+        upt = {deviceData.gen.upt}
+        date = {deviceData.gen.d}
+        time = {deviceData.gen.t}
+        ip = {deviceData.ip.ip}
+        sn = {deviceData.ip.sn}
+      />
+      <DashboardInputs data={deviceData.receiving} />
+      <DashboardPlaybacks data={data[0].playbacks} />
+      <DashboardMessages
+        url={props.deviceConfig.ipaddress}
+        type={props.deviceConfig.type}
+        sleeping={props.sleeping}
+      />
+      <DashboardHeatmap
+        url={props.deviceConfig.ipaddress}
+        sleeping={props.sleeping}
+      />
     </div>
   );
 }

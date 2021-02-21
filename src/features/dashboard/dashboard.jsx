@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Error from '../../common/components/error';
 import { config } from '../../config';
@@ -6,16 +7,32 @@ import './dashboard.css';
 import IODashboard from './ioDashboard';
 import QuadDashboard from './quadDashboard';
 
-export default function Dashboard({ sleeping }) {
+export default function Dashboard({ sleeping, genData }) {
+  // check which device is selected
   const params = useParams();
-  // eslint-disable-next-line eqeqeq
-  const device = config.devices.find((d) => d.id == params.id);
 
-  if (device.type === 'Quadcore') {
-    return <QuadDashboard device={device} sleeping={sleeping} />;
-  } else if (device.type === 'IOCore') {
-    return <IODashboard device={device} sleeping={sleeping} />;
-  } else if (device.type === 'Cuecore') {
-    return <CueDashboard device={device} sleeping={sleeping} />;
+  // get device config
+  // eslint-disable-next-line eqeqeq
+  const deviceConfig = config.devices.find((d) => d.id == params.id);
+
+  if (deviceConfig.type === 'Quadcore') {
+    return <QuadDashboard
+      deviceConfig={deviceConfig}
+      sleeping={sleeping}
+      genData={genData}
+    />;
+  } else if (deviceConfig.type === 'IOCore') {
+    return <IODashboard
+      deviceConfig={deviceConfig}
+      sleeping={sleeping}
+      genData={genData}
+    />;
+  } else if (deviceConfig.type === 'Cuecore') {
+    return <CueDashboard
+      deviceConfig={deviceConfig}
+      sleeping={sleeping}
+      genData={genData}
+    />;
+    
   } else return <Error />;
 }

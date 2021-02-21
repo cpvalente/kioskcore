@@ -25,6 +25,7 @@
   background-color: #45506055;
   display: inline-grid;
   grid-gap: 4px;
+  cursor: pointer;
 }
 
 .card-messages {

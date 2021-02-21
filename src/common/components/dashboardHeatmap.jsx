@@ -67,7 +67,7 @@ export default function DashboardHeatmap({ ipaddress, type, sleeping }) {
 
   const handleSelect = async (univSelect) => {
     // ask controller tochange universe
-    await setDMXUniverse(ipaddress, univSelect)
+    setDMXUniverse(ipaddress, univSelect)
     .then((response) => {
       if (response.ok) {
       // set select

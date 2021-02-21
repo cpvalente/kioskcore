@@ -57,7 +57,7 @@ export async function fetchNetworkData(ipaddress, protocol) {
         fetch(`${ipaddress}${mon_url}/tcp/out`)
         .then(response => checkResponse(response)),
       ]);
-      break;
+
     case 'udp':
       return await Promise.all([
         fetch(`${ipaddress}${mon_url}/udp/in`)
@@ -65,7 +65,7 @@ export async function fetchNetworkData(ipaddress, protocol) {
         fetch(`${ipaddress}${mon_url}/udp/out`)
         .then(response => checkResponse(response)),
       ]);
-      break;
+
     case 'osc':
       return await Promise.all([
         fetch(`${ipaddress}${mon_url}/osc/in`)
@@ -73,7 +73,7 @@ export async function fetchNetworkData(ipaddress, protocol) {
         fetch(`${ipaddress}${mon_url}/osc/out`)
         .then(response => checkResponse(response)),
       ]);
-      break;
+
     case 'rs232':
       return await Promise.all([
         fetch(`${ipaddress}${mon_url}/rs232/in`)
@@ -81,11 +81,9 @@ export async function fetchNetworkData(ipaddress, protocol) {
         fetch(`${ipaddress}${mon_url}/rs232/out`)
         .then(response => checkResponse(response)),
       ]);
-      break;
 
     default:
       return null;
-      break;
   }
 
 }

@@ -12,7 +12,11 @@ SPEC
 TODO
 -----
 To implement
-- [-] Last seen
+- [x] Last seen
+- [-] recover from crashed device
+- [-] if times do not match, show in red
+- [x] cancel sleep (settimeout) on click
+- [x] Make fetches definition common
 - [x] Heatmap fetches its own data
 - [x] Heatmap shows readout of all universes
 - [x] Sleeping function on heatmap (stop fetch after 5 min)

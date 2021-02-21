@@ -7,7 +7,6 @@ import DashboardPlaybacks from '../../common/components/dashboardPlaybacks';
 import Error from '../../common/components/error';
 import { getDummyData } from '../../data/dummyData';
 import { fetchPlaybackData } from '../../data/fetchAPI';
-import { checkResponse } from '../../data/utils';
 
 export default function QuadDashboard( props ) {
   const [data, setData] = useState(getDummyData);

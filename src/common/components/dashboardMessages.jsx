@@ -9,77 +9,84 @@ export default function DashboardMessages({ ipaddress, type, sleeping }) {
   const [dataOut, setDataOut] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [select, setSelect] = useState('TCP');
+  const [select, setSelect] = useState('tcp');
   const isMountedRef = useRef(null);
 
   async function getNetworkData() {
 
-    if (select === 'TCP') {
-      fetchNetworkData(ipaddress, 'tcp')
-      .then((data) => {
-        if (isMountedRef.current) {
-          setDataIn(data[0].tcpIn);
-          setDataOut(data[1].tcpOut);
-        }
-      })
-      .catch(function (err) {
-        if (isMountedRef.current) {
-          setError(true);
-          console.log(err.message);
-        }
-      });
-      setLoading(false);
-    }
+    switch (select) {
+      case 'tcp':
+        fetchNetworkData(ipaddress, select)
+        .then((data) => {
+          if (isMountedRef.current) {
+            setDataIn(data[0].tcpIn);
+            setDataOut(data[1].tcpOut);
+          }
+        })
+        .catch(function (err) {
+          if (isMountedRef.current) {
+            setError(true);
+            console.log(err.message);
+          }
+        });
+        setLoading(false);
+      break;
 
-    else if (select === 'UDP') {
-      fetchNetworkData(ipaddress, 'udp')
-      .then((data) => {
-        if (isMountedRef.current) {
-          setDataIn(data[0].udpIn);
-          setDataOut(data[1].udpOut);
-        }
-      })
-      .catch(function (err) {
-        if (isMountedRef.current) {
-          setError(true);
-          console.log(err.message);
-        }
-      });
-      setLoading(false);
-    }
+      case 'udp':
+        fetchNetworkData(ipaddress, select)
+        .then((data) => {
+          if (isMountedRef.current) {
+            setDataIn(data[0].udpIn);
+            setDataOut(data[1].udpOut);
+          }
+        })
+        .catch(function (err) {
+          if (isMountedRef.current) {
+            setError(true);
+            console.log(err.message);
+          }
+        });
+        setLoading(false);
+      break;
 
-    else if (select === 'OSC') {
-      fetchNetworkData(ipaddress, 'osc')
-      .then((data) => {
-        if (isMountedRef.current) {
-          setDataIn(data[0].oscIn);
-          setDataOut(data[1].oscOut);
-        }
-      })
-      .catch(function (err) {
-        if (isMountedRef.current) {
-          setError(true);
-          console.log(err.message);
-        }
-      });
-      setLoading(false);
-    }
+      case 'osc':
+        fetchNetworkData(ipaddress, select)
+        .then((data) => {
+          if (isMountedRef.current) {
+            setDataIn(data[0].oscIn);
+            setDataOut(data[1].oscOut);
+          }
+        })
+        .catch(function (err) {
+          if (isMountedRef.current) {
+            setError(true);
+            console.log(err.message);
+          }
+        });
+        setLoading(false);
+      break;
 
-    else if (type === 'IOCore' && select === 'RS232') {
-      fetchNetworkData(ipaddress, 'rs232')
-      .then((data) => {
-        if (isMountedRef.current) {
-          setDataIn(data[0].rs232In);
-          setDataOut(data[1].rs232Out);
+      case 'rs232':
+        if (type === 'IOCore') {
+          fetchNetworkData(ipaddress, select)
+          .then((data) => {
+            if (isMountedRef.current) {
+              setDataIn(data[0].rs232In);
+              setDataOut(data[1].rs232Out);
+            }
+          })
+          .catch(function (err) {
+            if (isMountedRef.current) {
+              setError(true);
+              console.log(err.message);
+            }
+          });
+          setLoading(false);
         }
-      })
-      .catch(function (err) {
-        if (isMountedRef.current) {
-          setError(true);
-          console.log(err.message);
-        }
-      });
-      setLoading(false);
+      break;
+
+      default:
+        break;
     }
   }
 
@@ -127,27 +134,27 @@ export default function DashboardMessages({ ipaddress, type, sleeping }) {
       <div className='cardContent'>
         <div className='selectors'>
           <div
-            className={select === 'TCP' ? 'selector active' : 'selector'}
-            onClick={() => setSelect('TCP')}
+            className={select === 'tcp' ? 'selector active' : 'selector'}
+            onClick={() => setSelect('tcp')}
           >
             TCP
           </div>
           <div
-            className={select === 'UDP' ? 'selector active' : 'selector'}
-            onClick={() => setSelect('UDP')}
+            className={select === 'udp' ? 'selector active' : 'selector'}
+            onClick={() => setSelect('udp')}
           >
             UDP
           </div>
           <div
-            className={select === 'OSC' ? 'selector active' : 'selector'}
-            onClick={() => setSelect('OSC')}
+            className={select === 'osc' ? 'selector active' : 'selector'}
+            onClick={() => setSelect('osc')}
           >
             OSC
           </div>
           {type === 'IOCore' && (
             <div
-              className={select === 'RS232' ? 'selector active' : 'selector'}
-              onClick={() => setSelect('RS232')}
+              className={select === 'rs232' ? 'selector active' : 'selector'}
+              onClick={() => setSelect('rs232')}
             >
               RS232
             </div>
@@ -155,7 +162,7 @@ export default function DashboardMessages({ ipaddress, type, sleeping }) {
         </div>
 
         {/* TCP TABLE */}
-        {(select === 'TCP' || select === 'UDP') && (
+        {(select === 'tcp' || select === 'udp') && (
           <table>
             <thead>
               <tr>
@@ -186,7 +193,7 @@ export default function DashboardMessages({ ipaddress, type, sleeping }) {
         )}
 
         {/* OSC TABLE */}
-        {select === 'OSC' && (
+        {select === 'osc' && (
           <table>
             <thead>
               <tr>
@@ -220,7 +227,7 @@ export default function DashboardMessages({ ipaddress, type, sleeping }) {
         )}
 
         {/* RS232 TABLE */}
-        {select === 'RS232' && (
+        {select === 'rs232' && (
           <table>
             <thead>
               <tr>

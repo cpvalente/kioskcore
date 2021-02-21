@@ -26,6 +26,14 @@ export const config = {
       notes: 'Receives data from 5 sensors and sends to Quadcore as UDP',
       short: 'I'
     },
+    {
+      id: 3,
+      name: 'Sensor Input',
+      type: 'Cuecore',
+      ipaddress: 'http://haarlem.visualproductions.nl:84/',
+      notes: 'Testing only',
+      short: 'C'
+    },
   ],
     notes: '',
     contact: 'Pekka Stoke at mail@ljos.no',

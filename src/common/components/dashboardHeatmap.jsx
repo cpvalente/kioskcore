@@ -4,9 +4,9 @@ import './heatmap.css';
 import Heatmap from '../../features/dashboard/heatmap';
 import { useEffect, useRef, useState } from 'react';
 import { getDummyDMX } from '../../data/dummyData';
-import { checkResponse } from '../../data/utils';
+import { fetchDMXData, setDMXUniverse } from '../../data/fetchAPI';
 
-export default function DashboardHeatmap({ url, sleeping }) {
+export default function DashboardHeatmap({ ipaddress, type, sleeping }) {
   const [data, setData] = useState(getDummyDMX);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -14,15 +14,10 @@ export default function DashboardHeatmap({ url, sleeping }) {
   const isMountedRef = useRef(null);
 
   async function getDMXData() {
-    Promise.all([
-      fetch(`${url}ajax/get/monitor/channels/0`).then(checkResponse),
-      fetch(`${url}ajax/get/monitor/channels/256`).then(checkResponse),
-    ])
-
+    fetchDMXData(ipaddress)
       .then((data) => {
         if (isMountedRef.current) {
           setData(data);
-          setLoading(false);
         }
       })
       .catch(function (err) {
@@ -30,8 +25,8 @@ export default function DashboardHeatmap({ url, sleeping }) {
           setError(true);
           console.log(err.message);
         }
-        setLoading(false);
       });
+    setLoading(false);
   }
 
   function useInterval(callback, delay) {
@@ -72,13 +67,14 @@ export default function DashboardHeatmap({ url, sleeping }) {
 
   const handleSelect = async (univSelect) => {
     // ask controller tochange universe
-    let response = await fetch(`${url}ajax/set/monitor/universe/${univSelect}`);
-
-    if (response.ok) {
+    await setDMXUniverse(ipaddress, univSelect)
+    .then((response) => {
+      if (response.ok) {
       // set select
       setSelect(univSelect);
-    }
-  }
+      }
+    })
+  };
 
   return (
     <div className='card card-heatmap'>
@@ -87,24 +83,33 @@ export default function DashboardHeatmap({ url, sleeping }) {
         <div className='selectors'>
           <div
             className={select === 0 ? 'selector active' : 'selector'}
-            onClick={() => handleSelect(0)}>
+            onClick={() => handleSelect(0)}
+          >
             DMX A
           </div>
           <div
             className={select === 1 ? 'selector active' : 'selector'}
-            onClick={() => handleSelect(1)}>
+            onClick={() => handleSelect(1)}
+          >
             DMX B
           </div>
-          <div
-            className={select === 2 ? 'selector active' : 'selector'}
-            onClick={() => handleSelect(2)}>
-            DMX C
-          </div>
-          <div
-            className={select === 3 ? 'selector active' : 'selector'}
-            onClick={() => handleSelect(3)}>
-            DMX D
-          </div>
+          {type === 'Quadcore' && (
+            <>
+              <div
+                className={select === 2 ? 'selector active' : 'selector'}
+                onClick={() => handleSelect(2)}
+              >
+                DMX C
+              </div>
+
+              <div
+                className={select === 3 ? 'selector active' : 'selector'}
+                onClick={() => handleSelect(3)}
+              >
+                DMX D
+              </div>
+            </>
+          )}
         </div>
         <Heatmap
           heatmapData={[...data[0].channels.data, ...data[1].channels.data]}

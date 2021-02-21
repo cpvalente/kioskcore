@@ -40,12 +40,20 @@ export default function CueDashboard( props ) {
   }
 
   async function getCuecoreData() {
-    const d = await fetchPlaybackData(deviceData.ipaddress);
-    // keep getting an object here (the promise)
-    if (isMountedRef.current) {
-      setData(d);
-    }
-    setLoading(false);
+    fetchPlaybackData(props.deviceConfig.ipaddress)
+    .then((data) => {
+      if (isMountedRef.current) {
+        setData(data);
+        setLoading(false);
+      }
+    })
+    .catch(function (err) {
+      if (isMountedRef.current) {
+        setError(true);
+        console.log(err.message);
+      }
+      setLoading(false);
+    });
   }
 
 
@@ -116,7 +124,8 @@ export default function CueDashboard( props ) {
         sleeping={props.sleeping}
       />
       <DashboardHeatmap
-        url={props.deviceConfig.ipaddress}
+        ipaddress={props.deviceConfig.ipaddress}
+        type={props.deviceConfig.type}
         sleeping={props.sleeping}
       />
     </div>

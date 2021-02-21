@@ -6,6 +6,7 @@ import DashboardMessages from '../../common/components/dashboardMessages';
 import DashboardPlaybacks from '../../common/components/dashboardPlaybacks';
 import Error from '../../common/components/error';
 import { getDummyData } from '../../data/dummyData';
+import { fetchPlaybackData } from '../../data/fetchAPI';
 import { checkResponse } from '../../data/utils';
 
 export default function QuadDashboard( props ) {
@@ -40,23 +41,20 @@ export default function QuadDashboard( props ) {
   }
 
   async function getQuadcoreData() {
-    const url = props.deviceConfig.ipaddress;
-    Promise.all([
-      fetch(`${url}ajax/get/playback/playback`).then(checkResponse),
-    ])
-      .then((data) => {
-        if (isMountedRef.current) {
-          setData(data);
-          setLoading(false);
-        }
-      })
-      .catch(function (err) {
-        if (isMountedRef.current) {
-          setError(true);
-          console.log(err.message);
-        }
+    fetchPlaybackData(props.deviceConfig.ipaddress)
+    .then((data) => {
+      if (isMountedRef.current) {
+        setData(data);
         setLoading(false);
-      });
+      }
+    })
+    .catch(function (err) {
+      if (isMountedRef.current) {
+        setError(true);
+        console.log(err.message);
+      }
+      setLoading(false);
+    });
   }
 
   function useInterval(callback, delay) {
@@ -128,7 +126,8 @@ export default function QuadDashboard( props ) {
         sleeping={props.sleeping}
       />
       <DashboardHeatmap
-        url={props.deviceConfig.ipaddress}
+        ipaddress={props.deviceConfig.ipaddress}
+        type={props.deviceConfig.type}
         sleeping={props.sleeping}
       />
     </div>

@@ -3,6 +3,8 @@ import { checkResponse } from "./utils";
 const status_url = 'ajax/get/index/status';
 const playback_url = 'ajax/get/playback/playback';
 const mon_url = 'ajax/get/monitor';
+const dmx_mon_url = 'ajax/get/monitor/channels';
+const dmx_un_set = 'ajax/set/monitor/universe';
 
 
 export async function fetchGeneralData(devices) {
@@ -18,6 +20,9 @@ export async function fetchGeneralData(devices) {
         json.lastSeen = new Date();
         arr.push(json);
       })
+      .catch((error) =>
+        console.log(error)
+      )
     ))
   return(arr);
 }
@@ -26,6 +31,20 @@ export async function fetchPlaybackData(ipaddress) {
   return await Promise.all([
     fetch(`${ipaddress}${playback_url}`)
     .then(response => checkResponse(response))
+  ])
+}
+
+export async function setDMXUniverse(ipaddress, univSelect) {
+  return await fetch(`${ipaddress}${dmx_un_set}/${univSelect}`);
+}
+
+
+export async function fetchDMXData(ipaddress) {
+  return await Promise.all([
+    fetch(`${ipaddress}${dmx_mon_url}/0`)
+    .then(response => checkResponse(response)),
+    fetch(`${ipaddress}${dmx_mon_url}/256`)
+    .then(response => checkResponse(response)),
   ])
 }
 

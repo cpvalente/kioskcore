@@ -5,7 +5,7 @@ import './dashboard.css';
 import IODashboard from './ioDashboard';
 import QuadDashboard from './quadDashboard';
 
-export default function Dashboard({ sleeping, genData }) {
+export default function Dashboard( props ) {
   // check which device is selected
   const params = useParams();
 
@@ -16,23 +16,53 @@ export default function Dashboard({ sleeping, genData }) {
   // eslint-disable-next-line eqeqeq
   const deviceConfig = devices.find((d) => d.id == params.id);
 
+  // get device data from
+  const deviceInSession = JSON.parse(sessionStorage.getItem(`deviceID-${params.id}`));
+
+  const deviceGenData = deviceInSession ?? {
+    lastSeen: 'Retrieving data....',
+    gen: {
+      serial: 'Retrieving data....',
+      upt: 'Retrieving data....',
+      lbl: 'Retrieving data....',
+    },
+    ip: {
+      ip: 'Retrieving data....',
+      sn: 'Retrieving data....',
+    },
+    time: {
+      d: 'Retrieving data....',
+      t: 'Retrieving data....',
+    },
+    receiving: {
+      d1: '-',
+      d2: '-',
+      midi: 'no',
+      ArtNet: 'no',
+      sACN: 'no',
+      TCP: 'no',
+      UDP: 'no',
+      OSC: 'no',
+    },
+  };
+
   if (deviceConfig.type === 'Quadcore') {
     return <QuadDashboard
       deviceConfig={deviceConfig}
-      sleeping={sleeping}
-      genData={genData}
+      deviceGenData={deviceGenData}
+      sleeping={props.sleeping}
     />;
   } else if (deviceConfig.type === 'IOCore') {
     return <IODashboard
       deviceConfig={deviceConfig}
-      sleeping={sleeping}
-      genData={genData}
+      deviceGenData={deviceGenData}
+      sleeping={props.sleeping}
     />;
   } else if (deviceConfig.type === 'Cuecore') {
     return <CueDashboard
-      deviceConfig={deviceConfig}
-      sleeping={sleeping}
-      genData={genData}
+        deviceConfig={deviceConfig}
+        deviceGenData={deviceGenData}
+        sleeping={props.sleeping}
     />;
 
   } else return <Error />;

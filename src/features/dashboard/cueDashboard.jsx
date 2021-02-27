@@ -92,7 +92,7 @@ export default function CueDashboard( props ) {
       getCuecoreData();
     }  }, 3000);
 
-  if (loading && (deviceData === undefined))
+  if (loading || props.deviceGenData == null)
     return (
       <div className='loadingSkeleton cue'>
         <div className='card dashboardGeneralSkeleton' />
@@ -107,16 +107,8 @@ export default function CueDashboard( props ) {
 
   return (
     <div className='dashboard cue'>
-      <DashboardGeneral
-        label = {deviceData.gen.lbl}
-        lastSeen = {deviceData.lastSeen}
-        upt = {deviceData.gen.upt}
-        date = {deviceData.gen.d}
-        time = {deviceData.gen.t}
-        ip = {deviceData.ip.ip}
-        sn = {deviceData.ip.sn}
-      />
-      <DashboardInputs data={deviceData.receiving} />
+      <DashboardGeneral deviceGenData={props.deviceGenData} />
+      <DashboardInputs data={props.deviceGenData.receiving} />
       <DashboardPlaybacks data={data[0].playbacks} />
       <DashboardMessages
         ipaddress={props.deviceConfig.ipaddress}

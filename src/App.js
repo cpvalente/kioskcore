@@ -6,9 +6,9 @@ import Dashboard from './features/dashboard/dashboard';
 import Navbar from './features/navbar/navbar';
 import Settings from './features/settings/settings';
 
-import { getDummyData } from './data/dummyData';
 import { fetchGeneralData } from './data/fetchAPI';
 import { SLEEP_TIME } from './appSettings';
+import { iterateSaveToSession } from './data/sessionData';
 
 
 // declare a timeout placeholder
@@ -18,7 +18,6 @@ function App() {
   const defaultRoute = '/device/1';
   const [sleeping, setSleeping] = useState(false);
   const isMountedRef = useRef(null);
-  const [genData, setGenData] = useState(getDummyData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -48,9 +47,11 @@ function App() {
   };
 
   async function getGeneralData() {
+    // fetch data
     const d = await fetchGeneralData(config.devices);
-    // keep getting an object here (the promise)
-    setGenData(await d);
+
+    // save to session storage
+    iterateSaveToSession(d);
   }
 
   useEffect(() => {
@@ -114,7 +115,7 @@ function App() {
           </Route>
 
           <Route path='/device/:id'>
-            <Dashboard sleeping={sleeping} genData={genData} />
+            <Dashboard sleeping={sleeping} />
           </Route>
           <Route path='/settings' component={Settings} />
         </Switch>

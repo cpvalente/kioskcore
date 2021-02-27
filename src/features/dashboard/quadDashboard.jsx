@@ -14,31 +14,6 @@ export default function QuadDashboard( props ) {
   const [error, setError] = useState(false);
   const isMountedRef = useRef(null);
 
-  let deviceData = {
-    lastSeen : 'Retrieving data....',
-    gen: {
-      serial: 'Retrieving data....',
-      upt: 'Retrieving data....',
-      lbl: 'Retrieving data....',
-    },
-    ip: {
-      ip: 'Retrieving data....',
-      sn: 'Retrieving data....',
-    },
-    time: {
-      d: 'Retrieving data....',
-      t: 'Retrieving data....',
-    },
-    receiving: {}
-  };
-
-  if (props.genData) {
-    let dd = props.genData.find((d) => d.id == props.deviceConfig.id);
-    if (dd) {
-      deviceData = dd;
-    }
-  }
-
   async function getQuadcoreData() {
     fetchPlaybackData(props.deviceConfig.ipaddress)
     .then((data) => {
@@ -93,7 +68,7 @@ export default function QuadDashboard( props ) {
     }
   }, 1500);
 
-  if (loading && (deviceData === undefined))
+  if (loading || props.deviceGenData == null)
     return (
       <div className='loadingSkeleton quad'>
         <div className='card dashboardGeneralSkeleton' />
@@ -108,16 +83,8 @@ export default function QuadDashboard( props ) {
 
   return (
     <div className='dashboard quad'>
-      <DashboardGeneral
-        label = {deviceData.gen.lbl}
-        lastSeen = {deviceData.lastSeen}
-        upt = {deviceData.gen.upt}
-        date = {deviceData.gen.d}
-        time = {deviceData.gen.t}
-        ip = {deviceData.ip.ip}
-        sn = {deviceData.ip.sn}
-      />
-      <DashboardInputs data={deviceData.receiving} />
+      <DashboardGeneral deviceGenData={props.deviceGenData} />
+      <DashboardInputs data={props.deviceGenData.receiving} />
       <DashboardPlaybacks data={data[0].playbacks} />
       <DashboardMessages
         ipaddress={props.deviceConfig.ipaddress}

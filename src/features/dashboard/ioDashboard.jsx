@@ -7,34 +7,7 @@ import Error from '../../common/components/error';
 
 export default function IODashboard( props ) {
 
-  let deviceData = {
-    lastSeen : 'Retrieving data....',
-    gen: {
-      serial: 'Retrieving data....',
-      upt: 'Retrieving data....',
-      lbl: 'Retrieving data....',
-    },
-    ip: {
-      ip: 'Retrieving data....',
-      sn: 'Retrieving data....',
-    },
-    time: {
-      d: 'Retrieving data....',
-      t: 'Retrieving data....',
-    },
-    receiving: {},
-    gpi: {},
-    gpo: {}
-  };
-
-  if (props.genData) {
-    let dd = props.genData.find((d) => d.id == props.deviceConfig.id);
-    if (dd) {
-      deviceData = dd;
-    }
-  }
-
-  if (deviceData === undefined)
+  if (props.deviceGenData == null)
     return (
       <div className='loadingSkeleton io'>
         <div className='card dashboardGeneralSkeleton' />
@@ -49,18 +22,10 @@ export default function IODashboard( props ) {
 
   return (
     <div className='dashboard io'>
-      <DashboardGeneral
-        label = {deviceData.gen.lbl}
-        lastSeen = {deviceData.lastSeen}
-        upt = {deviceData.gen.upt}
-        date = {deviceData.gen.d}
-        time = {deviceData.gen.t}
-        ip = {deviceData.ip.ip}
-        sn = {deviceData.ip.sn}
-      />
-      <DashboardInputs data={deviceData.receiving} />
-      <DashboardGPI data={deviceData.gpi} />
-      <DashboardGPO data={deviceData.gpo} />
+      <DashboardGeneral deviceGenData={props.deviceGenData} />
+      <DashboardInputs data={props.deviceGenData.receiving} />
+      <DashboardGPI data={props.deviceGenData.gpi} />
+      <DashboardGPO data={props.deviceGenData.gpo} />
       <DashboardMessages
         ipaddress={props.deviceConfig.ipaddress}
         type={props.deviceConfig.type}

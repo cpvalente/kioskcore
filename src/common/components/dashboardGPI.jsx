@@ -1,3 +1,4 @@
+import { intRegex } from '../../data/utils';
 import './components.css';
 import Indicator from './indicator';
 import './indicator.css';
@@ -13,18 +14,14 @@ export default function DashboardGPI({ data }) {
   }
 
   // populate array with data
-  for (let d in data) {
-    let regex = /\d+/g;
-    let index = parseInt(d.match(regex)) - 1;
-    let val = data[d];
+  for (const d in data) {
+    const index = parseInt(d.match(intRegex)) - 1;
+    const val = data[d];
 
     if (d.includes('Value')) {
-      if (val === '0%') {
-        gpi[index].gpiValue = 'Off';
-      } else {
-        gpi[index].gpiValue = val;
-      }
+      gpi[index].gpiValue = val;
     } else {
+      // make sure it has a name
       if (val === '') gpi[index].gpiName = `GPI ${index + 1}`;
       else gpi[index].gpiName = val;
     }
@@ -37,7 +34,10 @@ export default function DashboardGPI({ data }) {
         {gpi.map((g, index) => (
           <Indicator
             active={
-              g.gpiValue !== 'Off' && g.gpiValue !== '0%' && g.gpiValue !== ''
+              g.gpiValue !== 'Off' &&
+              g.gpiValue !== '0%' &&
+              g.gpiValue !== 0 &&
+              g.gpiValue !== ''
             }
             main={g.gpiValue}
             secondary={g.gpiName}

@@ -1,3 +1,4 @@
+import { intRegex } from '../../data/utils';
 import './components.css';
 import Indicator from './indicator';
 import './indicator.css';
@@ -13,15 +14,16 @@ export default function DashboardGPO({ data }) {
   }
 
   // populate array with data
-  for (let d in data) {
-    let regex = /\d+/g;
-    let index = parseInt(d.match(regex)) - 1;
+  for (const d in data) {
+    const index = parseInt(d.match(intRegex)) - 1;
+    const val = data[d];
 
     if (d.includes('Value')) {
-      gpo[index].gpoValue = data[d];
+      gpo[index].gpoValue = val;
     } else {
-      if (data[d] === '') gpo[index].gpoName = `GPO ${index + 1}`;
-      else gpo[index].gpoName = data[d];
+      // make sure it has a name
+      if (val === '') gpo[index].gpoName = `GPO ${index + 1}`;
+      else gpo[index].gpoName = val;
     }
   }
 
@@ -32,7 +34,10 @@ export default function DashboardGPO({ data }) {
         {gpo.map((g, index) => (
           <Indicator
             active={
-              g.gpoValue !== 'Off' && g.gpoValue !== '0%' && g.gpoValue !== 0
+              g.gpoValue !== 'Off' &&
+              g.gpoValue !== '0%' &&
+              g.gpoValue !== 0 &&
+              g.gpoValue !== ''
             }
             main={g.gpoValue}
             secondary={g.gpoName}

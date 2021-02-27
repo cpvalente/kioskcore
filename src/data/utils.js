@@ -5,3 +5,5 @@
       throw new Error('Something went wrong');
     }
   }
+
+  export const intRegex = /\d+/g;

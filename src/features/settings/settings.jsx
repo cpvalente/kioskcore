@@ -1,7 +1,7 @@
-import { config } from '../../config';
-import './settings.css';
-
 export default function Settings() {
+  // import config
+  const config = window.config;
+
   return (
     <div className='settings'>
       <div className='card card-settings-title'>

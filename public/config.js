@@ -4,9 +4,8 @@
 // device.short  populates UI
 
 // stop querying after (in ms)
-export const SLEEP_TIME = 50000;
 
-export const config = {
+var config = {
   projectTitle: 'Kringjså Skole',
   revisionDate: '12.02.2021',
   devices: [

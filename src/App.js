@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
-import { config, SLEEP_TIME } from './config';
 import Dashboard from './features/dashboard/dashboard';
 
 import Navbar from './features/navbar/navbar';
@@ -9,6 +8,7 @@ import Settings from './features/settings/settings';
 
 import { getDummyData } from './data/dummyData';
 import { fetchGeneralData } from './data/fetchAPI';
+import { SLEEP_TIME } from './appSettings';
 
 function App() {
   const defaultRoute = '/device/1';
@@ -18,6 +18,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  // import config
+  const config = window.config;
 
   // Sleeping state
   const handleClick = () => {

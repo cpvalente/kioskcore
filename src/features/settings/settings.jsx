@@ -1,3 +1,5 @@
+import './settings.css'
+
 export default function Settings() {
   // import config
   const config = window.config;

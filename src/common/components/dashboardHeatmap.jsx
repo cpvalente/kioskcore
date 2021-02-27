@@ -2,10 +2,46 @@ import './components.css';
 import './heatmap.css';
 
 import Heatmap from '../../features/dashboard/heatmap';
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { getDummyDMX } from '../../data/dummyData';
 import { fetchDMXData, setDMXUniverse } from '../../data/fetchAPI';
 import { DMX_INTERVAL } from '../../appSettings';
+
+const Selectors = memo (({ type, select, setSelect }) => {
+  return (
+    <div className='selectors'>
+    <div
+      className={select === 0 ? 'selector active' : 'selector'}
+      onClick={() => setSelect(0)}
+    >
+      DMX A
+    </div>
+    <div
+      className={select === 1 ? 'selector active' : 'selector'}
+      onClick={() => setSelect(1)}
+    >
+      DMX B
+    </div>
+    {type === 'Quadcore' && (
+      <>
+        <div
+          className={select === 2 ? 'selector active' : 'selector'}
+          onClick={() => setSelect(2)}
+        >
+          DMX C
+        </div>
+
+        <div
+          className={select === 3 ? 'selector active' : 'selector'}
+          onClick={() => setSelect(3)}
+        >
+          DMX D
+        </div>
+      </>
+    )}
+  </div>
+  )
+})
 
 export default function DashboardHeatmap({ ipaddress, type, sleeping }) {
   const [data, setData] = useState(getDummyDMX);
@@ -72,47 +108,20 @@ export default function DashboardHeatmap({ ipaddress, type, sleeping }) {
       if (response.ok) {
         // set select
         setSelect(univSelect);
+        getDMXData();
       }
     });
   };
+
+  const heatmapData = [...data[0].channels.data, ...data[1].channels.data];
 
   return (
     <div className='card card-heatmap'>
       <h3 className='cardTitle'>DMX Output</h3>
       <div className='cardContent'>
-        <div className='selectors'>
-          <div
-            className={select === 0 ? 'selector active' : 'selector'}
-            onClick={() => handleSelect(0)}
-          >
-            DMX A
-          </div>
-          <div
-            className={select === 1 ? 'selector active' : 'selector'}
-            onClick={() => handleSelect(1)}
-          >
-            DMX B
-          </div>
-          {type === 'Quadcore' && (
-            <>
-              <div
-                className={select === 2 ? 'selector active' : 'selector'}
-                onClick={() => handleSelect(2)}
-              >
-                DMX C
-              </div>
-
-              <div
-                className={select === 3 ? 'selector active' : 'selector'}
-                onClick={() => handleSelect(3)}
-              >
-                DMX D
-              </div>
-            </>
-          )}
-        </div>
+        <Selectors type={type} select={select} setSelect={handleSelect} />
         <Heatmap
-          heatmapData={[...data[0].channels.data, ...data[1].channels.data]}
+          heatmapData={heatmapData}
         />
       </div>
     </div>

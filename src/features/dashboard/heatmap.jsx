@@ -1,4 +1,6 @@
-export default function Heatmap({ heatmapData }) {
+import { memo } from 'react';
+
+const Heatmap = memo(({ heatmapData }) => {
   return (
     <div className='heatmapgrid cardContent'>
       {heatmapData.map((d, index) => {
@@ -13,4 +15,6 @@ export default function Heatmap({ heatmapData }) {
       })}
     </div>
   );
-}
+});
+
+export default Heatmap;

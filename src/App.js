@@ -10,6 +10,10 @@ import { getDummyData } from './data/dummyData';
 import { fetchGeneralData } from './data/fetchAPI';
 import { SLEEP_TIME } from './appSettings';
 
+
+// declare a timeout placeholder
+let timeout;
+
 function App() {
   const defaultRoute = '/device/1';
   const [sleeping, setSleeping] = useState(false);
@@ -21,19 +25,27 @@ function App() {
   // import config
   const config = window.config;
 
+  // set sleeping flag
+  const sleep = () => {
+    setSleeping(true);
+  };
+
+  // Start countdown
+  const stopQuerying = () => {
+    if (isMountedRef) {
+      // check if it is running and clear it
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(sleep, SLEEP_TIME);
+    }
+  };
+
   // Sleeping state
   const handleClick = () => {
     if (isMountedRef.current) {
       setSleeping(false);
-      setTimeout(stopQuerying, SLEEP_TIME);
+      stopQuerying();
     }
   };
-
-  function stopQuerying() {
-    if (isMountedRef.current) {
-      setSleeping(true);
-    }
-  }
 
   async function getGeneralData() {
     const d = await fetchGeneralData(config.devices);
@@ -50,10 +62,11 @@ function App() {
     setLoading(false);
 
     // start sleep countdown
-    setTimeout(stopQuerying, SLEEP_TIME);
+    stopQuerying();
 
     return function cleanup() {
       isMountedRef.current = false;
+      if (timeout) clearTimeout(timeout);
     };
   }, []);
 
@@ -83,7 +96,6 @@ function App() {
       getGeneralData();
       setLoading(false);
     }
-
   }, 1500);
 
   return (
@@ -102,7 +114,7 @@ function App() {
           </Route>
 
           <Route path='/device/:id'>
-            <Dashboard sleeping={sleeping} genData={genData}/>
+            <Dashboard sleeping={sleeping} genData={genData} />
           </Route>
           <Route path='/settings' component={Settings} />
         </Switch>

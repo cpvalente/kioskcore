@@ -4,7 +4,6 @@ import './components.css';
 export default function DashboardGeneral ( props ) {
 
   // get data from session
-  // const data = JSON.parse(sessionStorage.getItem(`deviceID-${props.deviceId}`));
   const lastSeen = new Date (props.deviceGenData?.lastSeen);
 
   // get time elapsed since last seen

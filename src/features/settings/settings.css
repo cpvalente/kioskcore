@@ -19,18 +19,16 @@
 
 .card-settings-contacts {
   /* grid row start / grid col start / grid row end /grid col end */
-  grid-area: 2 / 9 / 4 / 14
+  grid-area: 2 / 9 / 4 / 14;
 }
 
 .card-settings-title > .cardTitle {
   font-size: 20px;
-  line-height: 28px;
   color: #fffffa;
 }
 
 .card-settings-title > .cardSub {
   font-size: 14px;
-  line-height: 22px;
   padding-left: 8px;
   margin: 0;
   color: #4b7eb1;

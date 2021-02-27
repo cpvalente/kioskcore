@@ -31,3 +31,16 @@
 .card-messages {
   overflow-y: auto;
 }
+
+.field.rx,
+.field.tx {
+  opacity: 0.9;
+}
+
+.field.rx {
+  color: #20b48f;
+}
+
+.field.tx {
+  color: #d87979;
+}

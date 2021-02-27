@@ -4,6 +4,42 @@ import { fetchNetworkData } from '../../data/fetchAPI';
 import './components.css';
 import './messages.css';
 
+function TcpHeader() {
+  return (
+    <thead>
+      <tr>
+        <th></th>
+        <th>Address</th>
+        <th>Message</th>
+      </tr>
+    </thead>
+  );
+}
+
+function OscHeader() {
+  return (
+    <thead>
+      <tr>
+        <th></th>
+        <th>Address</th>
+        <th>URL</th>
+        <th>Message</th>
+      </tr>
+    </thead>
+  );
+}
+
+function RS232Header() {
+  return (
+    <thead>
+      <tr>
+        <th></th>
+        <th>Message</th>
+      </tr>
+    </thead>
+  );
+}
+
 export default function DashboardMessages({ ipaddress, type, sleeping }) {
   const [dataIn, setDataIn] = useState([]);
   const [dataOut, setDataOut] = useState([]);
@@ -163,17 +199,11 @@ export default function DashboardMessages({ ipaddress, type, sleeping }) {
         {/* TCP TABLE */}
         {(select === 'tcp' || select === 'udp') && (
           <table>
-            <thead>
-              <tr>
-                <th></th>
-                <th>Address</th>
-                <th>Message</th>
-              </tr>
-            </thead>
+            <TcpHeader />
             <tbody>
               {dataIn.map((d, index) => (
                 <tr key={index}>
-                  <td className='field'>RX</td>
+                  <td className='field rx'>🡾</td>
                   <td>{d.ip}</td>
                   <td>{d.arg}</td>
                 </tr>
@@ -182,7 +212,7 @@ export default function DashboardMessages({ ipaddress, type, sleeping }) {
             <tbody>
               {dataOut.map((d, index) => (
                 <tr key={index}>
-                  <td className='field'>TX</td>
+                  <td className='field tx'>🡼</td>
                   <td>{d.ip}</td>
                   <td>{d.arg}</td>
                 </tr>
@@ -194,18 +224,11 @@ export default function DashboardMessages({ ipaddress, type, sleeping }) {
         {/* OSC TABLE */}
         {select === 'osc' && (
           <table>
-            <thead>
-              <tr>
-                <th></th>
-                <th>Address</th>
-                <th>URL</th>
-                <th>Message</th>
-              </tr>
-            </thead>
+            <OscHeader />
             <tbody>
               {dataIn.map((d, index) => (
                 <tr key={index}>
-                  <td className='field'>RX</td>
+                  <td className='field rx'>🡾</td>
                   <td>{d.ip}</td>
                   <td>{d.uri}</td>
                   <td>{d.arg}</td>
@@ -215,7 +238,7 @@ export default function DashboardMessages({ ipaddress, type, sleeping }) {
             <tbody>
               {dataOut.map((d, index) => (
                 <tr key={index}>
-                  <td className='field'>TX</td>
+                  <td className='field tx'>🡼</td>
                   <td>{d.ip}</td>
                   <td>{d.uri}</td>
                   <td>{d.arg}</td>
@@ -228,16 +251,11 @@ export default function DashboardMessages({ ipaddress, type, sleeping }) {
         {/* RS232 TABLE */}
         {select === 'rs232' && (
           <table>
-            <thead>
-              <tr>
-                <th></th>
-                <th>Message</th>
-              </tr>
-            </thead>
+            <RS232Header />
             <tbody>
               {dataIn.map((d, index) => (
                 <tr key={index}>
-                  <td className='field'>RX</td>
+                  <td className='field rx'>🡾</td>
                   <td>{d.v}</td>
                 </tr>
               ))}
@@ -246,7 +264,7 @@ export default function DashboardMessages({ ipaddress, type, sleeping }) {
             <tbody>
               {dataOut.map((d, index) => (
                 <tr key={index}>
-                  <td className='field'>TX</td>
+                  <td className='field tx'>🡼</td>
                   <td>{d.v}</td>
                 </tr>
               ))}

@@ -13,7 +13,7 @@ export default function DashboardGeneral ( props ) {
   let style = {};
   if (timeElapsed > LAST_SEEN_BAD) {
     style = {
-      color:'#ff9191'
+      color:'#d87979'
     }
   }
 

@@ -30,7 +30,6 @@ export default function DashboardInputs({ data }) {
   // go through all rx
   // merge all DMX Inputs into one indicator
   for (let d in data) {
-
     // check if there is a DMX definition
     if (d === 'd1' || d === 'd2' || d === 'd3' || d === 'd4') {
       hasDMX = true;
@@ -43,7 +42,7 @@ export default function DashboardInputs({ data }) {
         }
       }
 
-    // if definition is not dmx, map to readable name
+      // if definition is not dmx, map to readable name
     } else {
       rx[reader[d]] = data[d];
     }

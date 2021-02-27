@@ -12,9 +12,10 @@ SPEC
 TODO
 -----
 To implement
+- [ ] Dont bother trying to fetch if general data failed
 - [x] Last seen
-- [-] recover from crashed device
-- [-] if times do not match, show in red
+- [x] recover from crashed device
+- [x] if times do not match, show in red
 - [x] cancel sleep (settimeout) on click
 - [x] Make fetches definition common
 - [x] Heatmap fetches its own data

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { FETCH_INTERVAL } from '../../appSettings';
 import DashboardGeneral from '../../common/components/dashboardGeneral';
 import DashboardHeatmap from '../../common/components/dashboardHeatmap';
 import DashboardInputs from '../../common/components/dashboardInputs';
@@ -8,7 +9,7 @@ import Error from '../../common/components/error';
 import { getDummyData } from '../../data/dummyData';
 import { fetchPlaybackData } from '../../data/fetchAPI';
 
-export default function QuadDashboard( props ) {
+export default function QuadDashboard(props) {
   const [data, setData] = useState(getDummyData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -16,19 +17,19 @@ export default function QuadDashboard( props ) {
 
   async function getQuadcoreData() {
     fetchPlaybackData(props.deviceConfig.ipaddress)
-    .then((data) => {
-      if (isMountedRef.current) {
-        setData(data);
+      .then((data) => {
+        if (isMountedRef.current) {
+          setData(data);
+          setLoading(false);
+        }
+      })
+      .catch(function (err) {
+        if (isMountedRef.current) {
+          setError(true);
+          console.log(err.message);
+        }
         setLoading(false);
-      }
-    })
-    .catch(function (err) {
-      if (isMountedRef.current) {
-        setError(true);
-        console.log(err.message);
-      }
-      setLoading(false);
-    });
+      });
   }
 
   function useInterval(callback, delay) {
@@ -54,7 +55,7 @@ export default function QuadDashboard( props ) {
   useEffect(() => {
     isMountedRef.current = true;
     getQuadcoreData();
-    setLoading(false)
+    setLoading(false);
 
     return function cleanup() {
       isMountedRef.current = false;
@@ -66,7 +67,7 @@ export default function QuadDashboard( props ) {
     if (isMountedRef.current && !loading && !props.sleeping) {
       getQuadcoreData();
     }
-  }, 1500);
+  }, FETCH_INTERVAL);
 
   if (loading || props.deviceGenData == null)
     return (

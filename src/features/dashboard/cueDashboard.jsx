@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { FETCH_INTERVAL } from '../../appSettings';
 import DashboardGeneral from '../../common/components/dashboardGeneral';
 import DashboardHeatmap from '../../common/components/dashboardHeatmap';
 import DashboardInputs from '../../common/components/dashboardInputs';
@@ -8,54 +9,28 @@ import Error from '../../common/components/error';
 import { getDummyData } from '../../data/dummyData';
 import { fetchPlaybackData } from '../../data/fetchAPI';
 
-export default function CueDashboard( props ) {
+export default function CueDashboard(props) {
   const [data, setData] = useState(getDummyData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const isMountedRef = useRef(null);
 
-  let deviceData = {
-    lastSeen : 'Retrieving data....',
-    gen: {
-      serial: 'Retrieving data....',
-      upt: 'Retrieving data....',
-      lbl: 'Retrieving data....',
-    },
-    ip: {
-      ip: 'Retrieving data....',
-      sn: 'Retrieving data....',
-    },
-    time: {
-      d: 'Retrieving data....',
-      t: 'Retrieving data....',
-    },
-    receiving: {}
-  };
-
-  if (props.genData) {
-    let dd = props.genData.find((d) => d.id == props.deviceConfig.id);
-    if (dd) {
-      deviceData = dd;
-    }
-  }
-
   async function getCuecoreData() {
     fetchPlaybackData(props.deviceConfig.ipaddress)
-    .then((data) => {
-      if (isMountedRef.current) {
-        setData(data);
+      .then((data) => {
+        if (isMountedRef.current) {
+          setData(data);
+          setLoading(false);
+        }
+      })
+      .catch(function (err) {
+        if (isMountedRef.current) {
+          setError(true);
+          console.log(err.message);
+        }
         setLoading(false);
-      }
-    })
-    .catch(function (err) {
-      if (isMountedRef.current) {
-        setError(true);
-        console.log(err.message);
-      }
-      setLoading(false);
-    });
+      });
   }
-
 
   function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -90,7 +65,8 @@ export default function CueDashboard( props ) {
   useInterval(() => {
     if (isMountedRef.current && !loading && !props.sleeping) {
       getCuecoreData();
-    }  }, 3000);
+    }
+  }, FETCH_INTERVAL);
 
   if (loading || props.deviceGenData == null)
     return (

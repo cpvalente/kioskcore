@@ -7,7 +7,7 @@ import Navbar from './features/navbar/navbar';
 import Settings from './features/settings/settings';
 
 import { fetchGeneralData } from './data/fetchAPI';
-import { SLEEP_TIME } from './appSettings';
+import { FETCH_INTERVAL, SLEEP_TIME } from './appSettings';
 import { iterateSaveToSession } from './data/sessionData';
 
 
@@ -97,7 +97,7 @@ function App() {
       getGeneralData();
       setLoading(false);
     }
-  }, 1500);
+  }, FETCH_INTERVAL);
 
   return (
     <BrowserRouter>

@@ -19,42 +19,32 @@
 /* ============ QUADCORE ================= */
 /* ======================================= */
 
-.quad >
-.card-general,
-.quad >
-.dashboardGeneralSkeleton {
+.quad > .card-general,
+.quad > .dashboardGeneralSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 1 / 4 / 6;
 }
 
-.quad >
-.card-inputs,
-.quad >
-.dashboardInputsSkeleton {
+.quad > .card-inputs,
+.quad > .dashboardInputsSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 6 / 7 / 9;
 }
 
-.quad >
-.card-playback,
-.quad >
-.dashboardPlaybacksSkeleton {
+.quad > .card-playback,
+.quad > .dashboardPlaybacksSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 4 / 1 / 7 / 6;
 }
 
-.quad >
-.card-messages,
-.quad >
-.dashboardMessagesSkeleton {
+.quad > .card-messages,
+.quad > .dashboardMessagesSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 9 / 11 / 15;
 }
 
-.quad >
-.card-heatmap,
-.quad >
-.dashboardHeatmapSkeleton {
+.quad > .card-heatmap,
+.quad > .dashboardHeatmapSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 7 / 1 / 11 / 9;
 }
@@ -63,42 +53,32 @@
 /* ============== IOCORE ================= */
 /* ======================================= */
 
-.io >
-.card-general,
-.io >
-.dashboardGeneralSkeleton {
+.io > .card-general,
+.io > .dashboardGeneralSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 1 / 4 / 5;
 }
 
-.io >
-.card-inputs,
-.io >
-.dashboardInputsSkeleton {
+.io > .card-inputs,
+.io > .dashboardInputsSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 4 / 1 / 11 / 5;
 }
 
-.io >
-.card-messages,
-.io >
-.dashboardMessagesSkeleton {
+.io > .card-messages,
+.io > .dashboardMessagesSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 9 / 11 / 15;
 }
 
-.io >
-.card-gpi,
-.io >
-.dashboardGPISkeleton {
+.io > .card-gpi,
+.io > .dashboardGPISkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 5 / 11 / 7;
 }
 
-.io >
-.card-gpo,
-.io >
-.dashboardGPOSkeleton {
+.io > .card-gpo,
+.io > .dashboardGPOSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 7 / 11 / 9;
 }
@@ -107,42 +87,32 @@
 /* ============ CUECORE ================= */
 /* ======================================= */
 
-.cue >
-.card-general,
-.cue >
-.dashboardGeneralSkeleton {
+.cue > .card-general,
+.cue > .dashboardGeneralSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
-  grid-area: 1 / 1 / 5 / 6;
+  grid-area: 1 / 1 / 4 / 6;
 }
 
-.cue >
-.card-inputs,
-.cue >
-.dashboardInputsSkeleton {
+.cue > .card-inputs,
+.cue > .dashboardInputsSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 6 / 7 / 9;
 }
 
-.cue >
-.card-playback,
-.cue >
-.dashboardPlaybacksSkeleton {
+.cue > .card-playback,
+.cue > .dashboardPlaybacksSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
-  grid-area: 5 / 1 / 7 / 6;
+  grid-area: 4 / 1 / 7 / 6;
 }
 
-.cue >
-.card-messages,
-.cue >
-.dashboardMessagesSkeleton {
+.cue > .card-messages,
+.cue > .dashboardMessagesSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 1 / 9 / 11 / 15;
 }
 
-.cue >
-.card-heatmap,
-.cue >
-.dashboardHeatmapSkeleton {
+.cue > .card-heatmap,
+.cue > .dashboardHeatmapSkeleton {
   /* grid row start / grid col start / grid row end /grid col end */
   grid-area: 7 / 1 / 11 / 9;
 }

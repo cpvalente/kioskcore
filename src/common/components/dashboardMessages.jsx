@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
+import { MESSAGES_INTERVAL } from '../../appSettings';
 import { fetchNetworkData } from '../../data/fetchAPI';
 import './components.css';
 import './messages.css';
 
 export default function DashboardMessages({ ipaddress, type, sleeping }) {
-
   const [dataIn, setDataIn] = useState([]);
   const [dataOut, setDataOut] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,66 +13,13 @@ export default function DashboardMessages({ ipaddress, type, sleeping }) {
   const isMountedRef = useRef(null);
 
   async function getNetworkData() {
-
     switch (select) {
       case 'tcp':
         fetchNetworkData(ipaddress, select)
-        .then((data) => {
-          if (isMountedRef.current) {
-            setDataIn(data[0].tcpIn);
-            setDataOut(data[1].tcpOut);
-          }
-        })
-        .catch(function (err) {
-          if (isMountedRef.current) {
-            setError(true);
-            console.log(err.message);
-          }
-        });
-        setLoading(false);
-      break;
-
-      case 'udp':
-        fetchNetworkData(ipaddress, select)
-        .then((data) => {
-          if (isMountedRef.current) {
-            setDataIn(data[0].udpIn);
-            setDataOut(data[1].udpOut);
-          }
-        })
-        .catch(function (err) {
-          if (isMountedRef.current) {
-            setError(true);
-            console.log(err.message);
-          }
-        });
-        setLoading(false);
-      break;
-
-      case 'osc':
-        fetchNetworkData(ipaddress, select)
-        .then((data) => {
-          if (isMountedRef.current) {
-            setDataIn(data[0].oscIn);
-            setDataOut(data[1].oscOut);
-          }
-        })
-        .catch(function (err) {
-          if (isMountedRef.current) {
-            setError(true);
-            console.log(err.message);
-          }
-        });
-        setLoading(false);
-      break;
-
-      case 'rs232':
-        if (type === 'IOCore') {
-          fetchNetworkData(ipaddress, select)
           .then((data) => {
             if (isMountedRef.current) {
-              setDataIn(data[0].rs232In);
-              setDataOut(data[1].rs232Out);
+              setDataIn(data[0].tcpIn);
+              setDataOut(data[1].tcpOut);
             }
           })
           .catch(function (err) {
@@ -81,9 +28,61 @@ export default function DashboardMessages({ ipaddress, type, sleeping }) {
               console.log(err.message);
             }
           });
+        setLoading(false);
+        break;
+
+      case 'udp':
+        fetchNetworkData(ipaddress, select)
+          .then((data) => {
+            if (isMountedRef.current) {
+              setDataIn(data[0].udpIn);
+              setDataOut(data[1].udpOut);
+            }
+          })
+          .catch(function (err) {
+            if (isMountedRef.current) {
+              setError(true);
+              console.log(err.message);
+            }
+          });
+        setLoading(false);
+        break;
+
+      case 'osc':
+        fetchNetworkData(ipaddress, select)
+          .then((data) => {
+            if (isMountedRef.current) {
+              setDataIn(data[0].oscIn);
+              setDataOut(data[1].oscOut);
+            }
+          })
+          .catch(function (err) {
+            if (isMountedRef.current) {
+              setError(true);
+              console.log(err.message);
+            }
+          });
+        setLoading(false);
+        break;
+
+      case 'rs232':
+        if (type === 'IOCore') {
+          fetchNetworkData(ipaddress, select)
+            .then((data) => {
+              if (isMountedRef.current) {
+                setDataIn(data[0].rs232In);
+                setDataOut(data[1].rs232Out);
+              }
+            })
+            .catch(function (err) {
+              if (isMountedRef.current) {
+                setError(true);
+                console.log(err.message);
+              }
+            });
           setLoading(false);
         }
-      break;
+        break;
 
       default:
         break;
@@ -124,7 +123,7 @@ export default function DashboardMessages({ ipaddress, type, sleeping }) {
     if (isMountedRef.current && !loading && !sleeping) {
       getNetworkData();
     }
-  }, 3000);
+  }, MESSAGES_INTERVAL);
 
   if (loading && !error) return <div className='card card-messages'></div>;
 

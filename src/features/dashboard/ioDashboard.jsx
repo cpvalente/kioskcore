@@ -5,8 +5,7 @@ import DashboardInputs from '../../common/components/dashboardInputs';
 import DashboardMessages from '../../common/components/dashboardMessages';
 import Error from '../../common/components/error';
 
-export default function IODashboard( props ) {
-
+export default function IODashboard(props) {
   if (props.deviceGenData == null)
     return (
       <div className='loadingSkeleton io'>

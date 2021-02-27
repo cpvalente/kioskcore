@@ -22,6 +22,10 @@ p {
   color: #53a6fa;
 }
 
+.card > p {
+  padding: 4px;
+}
+
 .App {
   display: grid;
   grid-template-columns: 4em 1fr;

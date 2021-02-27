@@ -5,6 +5,7 @@ import Heatmap from '../../features/dashboard/heatmap';
 import { useEffect, useRef, useState } from 'react';
 import { getDummyDMX } from '../../data/dummyData';
 import { fetchDMXData, setDMXUniverse } from '../../data/fetchAPI';
+import { DMX_INTERVAL } from '../../appSettings';
 
 export default function DashboardHeatmap({ ipaddress, type, sleeping }) {
   const [data, setData] = useState(getDummyDMX);
@@ -63,17 +64,16 @@ export default function DashboardHeatmap({ ipaddress, type, sleeping }) {
     if (isMountedRef.current && !loading && !sleeping) {
       getDMXData();
     }
-  }, 1500);
+  }, DMX_INTERVAL);
 
   const handleSelect = async (univSelect) => {
     // ask controller tochange universe
-    setDMXUniverse(ipaddress, univSelect)
-    .then((response) => {
+    setDMXUniverse(ipaddress, univSelect).then((response) => {
       if (response.ok) {
-      // set select
-      setSelect(univSelect);
+        // set select
+        setSelect(univSelect);
       }
-    })
+    });
   };
 
   return (

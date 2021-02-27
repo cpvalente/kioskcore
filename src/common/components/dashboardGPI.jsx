@@ -25,7 +25,7 @@ export default function DashboardGPI({ data }) {
         gpi[index].gpiValue = val;
       }
     } else {
-      if (val === '') gpi[index].gpiName = `GPI ${index+1}`;
+      if (val === '') gpi[index].gpiName = `GPI ${index + 1}`;
       else gpi[index].gpiName = val;
     }
   }
@@ -36,7 +36,9 @@ export default function DashboardGPI({ data }) {
       <div className='cardContent indicatorlist'>
         {gpi.map((g, index) => (
           <Indicator
-            active={g.gpiValue !== 'Off' && g.gpiValue !== '0%'}
+            active={
+              g.gpiValue !== 'Off' && g.gpiValue !== '0%' && g.gpiValue !== ''
+            }
             main={g.gpiValue}
             secondary={g.gpiName}
             key={index}

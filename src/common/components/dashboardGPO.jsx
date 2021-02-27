@@ -20,7 +20,7 @@ export default function DashboardGPO({ data }) {
     if (d.includes('Value')) {
       gpo[index].gpoValue = data[d];
     } else {
-      if (data[d] === '') gpo[index].gpoName = `GPO ${index+1}`;
+      if (data[d] === '') gpo[index].gpoName = `GPO ${index + 1}`;
       else gpo[index].gpoName = data[d];
     }
   }
@@ -31,11 +31,13 @@ export default function DashboardGPO({ data }) {
       <div className='cardContent indicatorlist'>
         {gpo.map((g, index) => (
           <Indicator
-          active={(g.gpoValue !== 'Off') && (g.gpoValue !== '0%') && (g.gpoValue !== 0)}
-          main={g.gpoValue}
-          secondary={g.gpoName}
-          key={index}
-        />
+            active={
+              g.gpoValue !== 'Off' && g.gpoValue !== '0%' && g.gpoValue !== 0
+            }
+            main={g.gpoValue}
+            secondary={g.gpoName}
+            key={index}
+          />
         ))}
       </div>
     </div>

@@ -5,7 +5,7 @@ import './dashboard.css';
 import IODashboard from './ioDashboard';
 import QuadDashboard from './quadDashboard';
 
-export default function Dashboard( props ) {
+export default function Dashboard(props) {
   // check which device is selected
   const params = useParams();
 
@@ -17,7 +17,9 @@ export default function Dashboard( props ) {
   const deviceConfig = devices.find((d) => d.id == params.id);
 
   // get device data from
-  const deviceInSession = JSON.parse(sessionStorage.getItem(`deviceID-${params.id}`));
+  const deviceInSession = JSON.parse(
+    sessionStorage.getItem(`deviceID-${params.id}`)
+  );
 
   const deviceGenData = deviceInSession ?? {
     lastSeen: 'Retrieving data....',
@@ -37,33 +39,38 @@ export default function Dashboard( props ) {
     receiving: {
       d1: '-',
       d2: '-',
-      midi: 'no',
-      ArtNet: 'no',
-      sACN: 'no',
-      TCP: 'no',
-      UDP: 'no',
-      OSC: 'no',
+      midi: '-',
+      ArtNet: '-',
+      sACN: '-',
+      TCP: '-',
+      UDP: '-',
+      OSC: '-',
     },
   };
 
   if (deviceConfig.type === 'Quadcore') {
-    return <QuadDashboard
-      deviceConfig={deviceConfig}
-      deviceGenData={deviceGenData}
-      sleeping={props.sleeping}
-    />;
-  } else if (deviceConfig.type === 'IOCore') {
-    return <IODashboard
-      deviceConfig={deviceConfig}
-      deviceGenData={deviceGenData}
-      sleeping={props.sleeping}
-    />;
-  } else if (deviceConfig.type === 'Cuecore') {
-    return <CueDashboard
+    return (
+      <QuadDashboard
         deviceConfig={deviceConfig}
         deviceGenData={deviceGenData}
         sleeping={props.sleeping}
-    />;
-
+      />
+    );
+  } else if (deviceConfig.type === 'IOCore') {
+    return (
+      <IODashboard
+        deviceConfig={deviceConfig}
+        deviceGenData={deviceGenData}
+        sleeping={props.sleeping}
+      />
+    );
+  } else if (deviceConfig.type === 'Cuecore') {
+    return (
+      <CueDashboard
+        deviceConfig={deviceConfig}
+        deviceGenData={deviceGenData}
+        sleeping={props.sleeping}
+      />
+    );
   } else return <Error />;
 }

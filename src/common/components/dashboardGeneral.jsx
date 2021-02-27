@@ -1,7 +1,7 @@
 import { LAST_SEEN_BAD } from '../../appSettings';
 import './components.css';
 
-export default function DashboardGeneral( props ) {
+export default function DashboardGeneral ( props ) {
 
   // get data from session
   // const data = JSON.parse(sessionStorage.getItem(`deviceID-${props.deviceId}`));

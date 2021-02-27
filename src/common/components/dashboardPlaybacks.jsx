@@ -8,13 +8,15 @@ export default function DashboardPlaybacks({ data }) {
       <div className='cardContent indicatorlist'>
         {data.map((pb, index) => (
           <Indicator
-          active={pb.state === 1}
-          main={`${(Number.isInteger(pb.cue) ? pb.cue + 1 : pb.cue )} / ${pb.list}`}
-          secondary={pb.label}
-          key={index}
-        />
+            active={pb.state === 1}
+            main={`${Number.isInteger(pb.cue) ? pb.cue + 1 : pb.cue} / ${
+              pb.list
+            }`}
+            secondary={pb.label}
+            key={index}
+          />
         ))}
-        </div>
+      </div>
     </div>
   );
 }

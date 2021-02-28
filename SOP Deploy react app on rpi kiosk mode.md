@@ -62,7 +62,7 @@ xset s off
 xset dpmx 200 0 0
 
 unclutter &
-chromium-browser http://192.168.1.37:3000 \
+chromium-browser http://localhost:3000 \
   --window-size=800,480 \
   --window-position=0,0 \
   --start-fullscreen \
@@ -83,7 +83,6 @@ chromium-browser http://192.168.1.37:3000 \
 
 - Setup a cronjob to reboot everynight
 
-
 - Install screen [link][4]
 
 Build react app
@@ -92,7 +91,7 @@ https://www.digitalocean.com/community/tutorials/how-to-deploy-a-react-applicati
 
 - move build directory to the pi
 /var/www/[kioskcore]/build
-( sudo rsync -vr /home/pi/kioskcore/* ./ )
+( sudo rsync -vr /home/pi/kioskcore/* /var/www/kioskcore )
 
 Notes on config files
 ----------------------
@@ -192,6 +191,8 @@ Notes
 Potential Issues
 ----------------
 - Already had another pi on my network, as both responded to the hostname raspberrypi I was getting a lot of issues. isolating one and changing hostname sorted this out [link][5]
+- Rendering unicode character was looking tricky, installing the ancient fonts pack sorted it
+> sudo apt-get install ttf-ancient-fonts
 
 Useful Links
 --------------

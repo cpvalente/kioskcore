@@ -8,7 +8,7 @@ import Settings from './features/settings/settings';
 
 import { fetchGeneralData } from './data/fetchAPI';
 import { FETCH_INTERVAL, SLEEP_TIME } from './appSettings';
-import { iterateSaveToSession } from './data/sessionData';
+import { iterateSaveToStorage } from './data/sessionData';
 
 
 // declare a timeout placeholder
@@ -50,8 +50,8 @@ function App() {
     // fetch data
     const d = await fetchGeneralData(config.devices);
 
-    // save to session storage
-    iterateSaveToSession(d);
+    // save to local storage
+    iterateSaveToStorage(d);
   }
 
   useEffect(() => {

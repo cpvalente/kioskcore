@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import Error from '../../common/components/error';
+import { getFromStorage } from '../../data/sessionData';
 import CueDashboard from './cueDashboard';
 import './dashboard.css';
 import IODashboard from './ioDashboard';
@@ -16,12 +17,10 @@ export default function Dashboard(props) {
   // eslint-disable-next-line eqeqeq
   const deviceConfig = devices.find((d) => d.id == params.id);
 
-  // get device data from
-  const deviceInSession = JSON.parse(
-    sessionStorage.getItem(`deviceID-${params.id}`)
-  );
+  // get device data from Storage
+  const deviceInStorage = getFromStorage(params.id);
 
-  const deviceGenData = deviceInSession ?? {
+  const deviceGenData = deviceInStorage ?? {
     lastSeen: 'Retrieving data....',
     gen: {
       serial: 'Retrieving data....',

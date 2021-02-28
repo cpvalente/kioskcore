@@ -3,7 +3,7 @@ import './components.css';
 
 export default function DashboardGeneral ( props ) {
 
-  // get data from session
+  // get data from storage
   const lastSeen = new Date (props.deviceGenData?.lastSeen);
 
   // get time elapsed since last seen

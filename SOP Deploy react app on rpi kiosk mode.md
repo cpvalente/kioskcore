@@ -47,13 +47,13 @@ sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' ~/.config/chromium/'Loc
 sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chr$
 
 # Run Chromium in kiosk mode
-chromium-browser  --noerrdialogs --disable-infobars --kiosk --check-for-update-interval=31536000 $KIOSK_URL
+chromium-browser  --noerrdialogs --disable-infobars --kiosk --check-for-update-interval=31536000  $KIOSK_URL
 
 
 ```
   - Step 8: we define the URL here. Using google for initial test. myIP:3000 while developing and eventually http://localhost after deployed with nginx
 
-- had to add a setup setup to turn off stuff like pinch zoom
+- had to add a setup to turn off stuff like pinch zoom, this also seems to give better control over stuff. it seems to overrude the flags in the previous setup
   - edit file /home/pi/.xinitrc mind the site and window size
 ```
 #!/usr/bin/env sh
@@ -67,7 +67,6 @@ chromium-browser http://localhost:3000 \
   --window-position=0,0 \
   --start-fullscreen \
   --kiosk \
-  --incognito \
   --noerrdialogs \
   --disable-translate \
   --no-first-run \
@@ -77,9 +76,9 @@ chromium-browser http://localhost:3000 \
   --disable-features=TranslateUI \
   --disk-cache-dir=/dev/null \
   --overscroll-history-navigation=0 \
-  --disable-pinch
+  --disable-pinch \
+  --check-for-update-interval=31536000 \
   ```
-
 
 - Setup a cronjob to reboot everynight
 
@@ -193,6 +192,9 @@ Potential Issues
 - Already had another pi on my network, as both responded to the hostname raspberrypi I was getting a lot of issues. isolating one and changing hostname sorted this out [link][5]
 - Rendering unicode character was looking tricky, installing the ancient fonts pack sorted it
 > sudo apt-get install ttf-ancient-fonts
+- Official screen was upside down for me. in sudo nano /boot/config.txt add lcd_rotate=2
+
+- It could be nice to add systemd or something to watch the process in case of crashes [link][8]
 
 Useful Links
 --------------
@@ -203,3 +205,4 @@ Useful Links
 [5]: https://www.tomshardware.com/how-to/raspberry-pi-change-hostname
 [6]: https://desertbot.io/blog/raspberry-pi-touchscreen-kiosk-setup
 [7]: https://techinjektion.com/deploy-react-app-on-nginx/
+[8]: https://raspberrypi.stackexchange.com/questions/104827/start-chromium-on-raspberry-pi-in-kiosk-mode-using-systemd-service-instead-of-th

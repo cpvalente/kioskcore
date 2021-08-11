@@ -23,6 +23,10 @@ To implement
 - [x] Sleeping function on heatmap (stop fetch after 5 min)
 - [x] Sleeping function on entire interface
 
+![Cuecore Monitor](https://github.com/cpvalente/kioskcore/blob/master/.github/cue.png)
+![Quadcore Monitor](https://github.com/cpvalente/kioskcore/blob/master/.github/quad.png)
+![IOCore Monitor](https://github.com/cpvalente/kioskcore/blob/master/.github/io.png)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
